@@ -17,13 +17,15 @@ class CategoryController extends Controller
     public function index()
     {
         $data = Category::all()->toArray();
-        return Inertia::render('Admin/Category', $data);
+        return Inertia::render('Admin/Category', [
+            'categories' => $data
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request): Response
+    public function create(Request $request)
     {
 
         $request->validate([
@@ -36,12 +38,12 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): void
+    public function store(Request $request)
     {
         $status = Category::create([
             'name' => $request->name,
         ]);
-        //return Redirect::route('category.index');
+        return Redirect::route('category.index');
     }
 
     /**
