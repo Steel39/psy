@@ -1,0 +1,73 @@
+version: '3.8'
+services:
+
+  # Backend контейнер
+  backend:
+      build:
+          context: .
+          dockerfile: docker/backend/Dockerfile
+      container_name: "${APP_CONTAINER_NAME}"
+      extra_hosts:
+          - "host.docker.internal:host-gateway"
+      restart: unless-stopped
+      tty: true
+      environment:
+          SERVICE_NAME: "${APP_CONTAINER_NAME}"
+          SERVICE_TAGS: dev
+      working_dir: /var/www
+      volumes:
+          - ./docker/backend/php.ini:/usr/local/etc/php/php.ini
+          - .:/var/www
+
+  # Nginx контейнер для вебсервера
+  nginx:
+    # Используем готовый образ для nginx контейнера
+    image: nginx:alpine
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80" # Внутренний порт контейнера пробрасываем на host машину
+    volumes:
+      - .:/var/www # Монтируем локальную папку в контейнер как /var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/ # Передаем в контейнер конфигурационные файлы nginx
+    depends_on:
+      - backend
+    container_name: "${WEBSERVER_CONTAINER_NAME}"
+
+  # MySQL контейнер
+  db:
+      image: mysql:8.0.14
+      volumes:
+          - ./mysql:/var/lib/mysql-files
+          - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+      container_name: "${DB_CONTAINER_NAME}"
+      restart: unless-stopped
+      tty: true
+      ports:
+          - "${DB_PORT}:3306"
+      environment:
+          SERVICE_TAGS: dev
+          SERVICE_NAME: "${DB_CONTAINER_NAME}"
+          MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+          MYSQL_PASSWORD: "${DB_PASSWORD}"
+          MYSQL_DATABASE: "${DB_DATABASE}"
+          MYSQL_USER: "${DB_USERNAME}"
+      healthcheck:
+          test: [ "CMD", "mysqladmin", "ping" ]
+      command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci',
+                '--default-authentication-plugin=mysql_native_password']
+
+  # Для сборки js
+  node:
+    build:
+        context: .
+        dockerfile: ./docker/frontend/Dockerfile
+    tty: true
+    ports:
+        - "5173:5173"
+    working_dir: /var/www
+    volumes:
+        - .:/var/www # Монтируем локальную папку в контейнер как /var/www
+    container_name: "${FRONTEND_CONTAINER_NAME}"
+    depends_on:
+        - nginx
