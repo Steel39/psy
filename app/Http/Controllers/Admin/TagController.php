@@ -9,59 +9,39 @@ use Inertia\Inertia;
 
 class TagController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return Inertia::render('Admin/Tag', []);
+        $data = Tag::all()->toArray();
+        return Inertia::render('Admin/Tag', [
+            'tags' => $data
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+                'name' => 'required|string|max:255'
+            ]
+        );
+        Tag::create($data);
+        return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Tag $tag)
+    public function update(Request $request, Tag $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Tag $tag)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Tag $tag)
-    {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255'
+        ]);
+        $id->update($request->only('name'));
+        return redirect()->back();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tag $tag)
+    public function destroy(Tag $id)
     {
-        //
+        $id->delete();
+        return redirect()->back();
     }
 }

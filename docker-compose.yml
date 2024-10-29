@@ -38,7 +38,7 @@ services:
   db:
       image: mysql:8.0.14
       volumes:
-          - ./mysql:/var/lib/mysql-files
+          - ./mysql/data:/var/lib/mysql-files
           - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
       container_name: "${DB_CONTAINER_NAME}"
       restart: unless-stopped
