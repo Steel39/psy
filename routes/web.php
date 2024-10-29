@@ -34,12 +34,13 @@ Route::prefix('dashboard')->group(function () {
     });
     Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'post'], function () {
         Route::get('/', [PostController::class, 'index'])->name('post.index');
+        Route::get('/create', [PostController::class, 'create'])->name('createPost');
     });
     Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'tag'], function () {
         Route::get('/', [TagController::class, 'index'])->name('tag.index');
         Route::post('/store', [TagController::class, 'store'])->name('tag.store');
         Route::delete('/delete/{id}', [TagController::class, 'destroy'])->name('tag.delete');
-        Route::put('/update/{id}', [TagController::class, 'update'])->name('tag.update');
+        Route::patch('/update/{id}', [TagController::class, 'update'])->name('tag.update');
     });
 });
 

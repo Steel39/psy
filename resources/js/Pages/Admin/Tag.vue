@@ -19,11 +19,11 @@
                 <div class="flex flexauto flex-wrap gap-4 flex-wrap mt-10">
                     <div v-for="(tag, index) in tags" :key="tag.id" class="bg-gradient-to-tl from-cyan-300
                            to-lime-300 text-black  font-bold py-2 px-4 rounded opacity-50">
-                           <input v-if="isEdit[index]?.name" v-model="tag.name" type="text" class="rounded-md 
+                           <input v-if="isEdit[index]?.name" v-model="form.name" type="text" class="rounded-md 
                            bg-gradient-to-r from-cyan-200 to-emerald-300 text-black"
                            @blur="stopEdit(index, 'name')"
-                           @keyup.enter="updateTag(tag.id)" />
-                        <span v-else @click="editTag(index, 'name')">
+                           @keyup.enter="updateTag(tag.id, index, 'name')" />
+                        <span v-else @click="editTag(tag.id, index, 'name')">
                             {{ tag.name }}
                         </span>
 
@@ -39,8 +39,7 @@
 </template>
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Inertia } from "@inertiajs/inertia";
-import { useForm } from "@inertiajs/inertia-vue3";
+import { useForm } from "@inertiajs/vue3";
 import { defineProps } from "vue";
 import { provide, ref } from "vue";
 
@@ -48,7 +47,6 @@ import { provide, ref } from "vue";
 const props = defineProps({
     tags: Object
 })
-
 const isEdit = ref(Array(props.tags.length).fill({}))
 const status = ref('Страница тегов')
 provide('status', {
@@ -59,37 +57,42 @@ const form = useForm({
     name: ''
 })
 
-const editTag = (index, field) => {
+const editTag = (id, index, field) => {
+    const tag = props.tags.find(tag => tag.id === id)
+    form.name = tag.name
     isEdit.value[index] = { ...isEdit.value[index], [field]: true }
+    
     status.value = 'Редактируем тег...'
 }
-const stopEdit = () => {
+const stopEdit = (index, field) => {
     isEdit.value[index] = { ...isEdit.value[index], [field]: false }
+    form.reset()
 }
 
-const updateTag = (id) => {
+const updateTag = (id, index, field) => {
     const tag = props.tags.find(tag => tag.id === id)
     if(tag) {
-        Inertia.put(route('tag.update', { 
-        id: tag.id,
-        name: tag.name }))
+        form.patch(route('tag.update', tag.id))
+        console.log
     }
-    
+    isEdit.value[index] = { ...isEdit.value[index], [field]: false }
+    form.reset()
 }
 
 const deleteTag = (id) => {
-    Inertia.delete(route('tag.delete', { id: id }), {
-        preserveScroll: true
+    form.delete(route('tag.delete', { id: id }), {
+        preserveScroll: true,
     })
+    status.value = 'Тег удален =)'
 }
 
-console.log(props.tags)
 const submit = () => {
+    status.value = 'Добавляем...'
     form.post(route('tag.store'), {
-        preserveScroll: true
+        preserveScroll: true,
     })
+    form.reset()
+    status.value = 'ok =)'
 }
-
-
 
 </script>
