@@ -29,6 +29,8 @@ Route::prefix('dashboard')->group(function () {
     Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'category'], function () {
         Route::get('/', [CategoryController::class, 'index'])->name('category.index');
         Route::post('/store', [CategoryController::class, 'store'])->name('category.store');
+        Route::put('/edit/{id}', [CategoryController::class, 'update'])->name('category.update');
+        Route::delete('/delete/{id}', [CategoryController::class, 'destroy'])->name('category.delete');
     });
     Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'post'], function () {
         Route::get('/', [PostController::class, 'index'])->name('post.index');

@@ -17,22 +17,31 @@
                 <div class="mt-4 text-gray-500 overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                            <tbody v-for="category in categories">
-                                <tr
-                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{  category.name }}
-                                    </th>
-                                    <td class="px-6 py-4 text-right">
-                                        <a href="#"
-                                            class="font-medium ml-10 text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                        <a href="#"
-                                            class="font-medium ml-10 text-white-600 dark:text-blue-500 hover:underline">Del</a>
+
+                            <tbody>
+                                <tr v-for="(category, index) in categories" :key="category.id" class="bg-white border-b 
+                                        dark:bg-gray-800 dark:border-gray-700
+                                        hover:bg-gray-50 dark:hover:bg-gray-600">
+
+                                    <td scope="row" class="px-6 py-4 font-medium text-gray-900
+                                                         whitespace-nowrap dark:text-white">
+                                        <input v-if="isEdit[index]?.name" v-model="category.name" type="text"
+                                            class="rounded-md bg-gradient-to-r from-cyan-200 to-emerald-300 text-black"
+                                            @blur="stopEdit(index, 'name')"
+                                            @keyup.enter="updateCategory(category.id)" />
+                                        <span v-else @click="editCategory(index, 'name')">{{ category.name }}</span>
+                                    </td>
+                                    <td>
+                                        <button class="rounded-md w-1/2 shadow-md hover:shadow-xl
+                                         hover:shadow-emerald-500 shadow-pink-400  text-black 
+                                         font-bold bg-gradient-to-r from-red-300 to-pink-200"
+                                            @click="deleteCategory(category.id)">Удалить</button>
                                     </td>
                                 </tr>
+
                             </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>
@@ -46,19 +55,45 @@
 import { useForm } from "@inertiajs/inertia-vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { provide, ref } from "vue";
+import { Inertia } from "@inertiajs/inertia";
 
 const props = defineProps({
     categories: Object
 })
-const categories = props.categories
+const isEdit = ref(Array(props.categories.length).fill({}))
 const status = ref('Все хорошо =)')
+const categories = ref(props.categories)
 const form = useForm({
-    name: null
+    id: null,
+    name: ''
 })
-console.log(categories)
+
+const deleteCategory = (id) => {
+    Inertia.delete(route('category.delete', { id: id }), {
+        preserveScroll: true,
+    })
+    status.value = 'Удаляем...'
+}
+const editCategory = (index, field) => {
+    isEdit.value[index] = { ...isEdit.value[index], [field]: true }
+    status.value = 'Редактируем категорию...'
+}
+
+const stopEdit = (index, field) => {
+    isEdit.value[index] = { ...isEdit.value[index], [field]: false }
+}
+const updateCategory = (id) => {
+    const category = props.categories.find(category => category.id === id)
+    if (category) {
+        Inertia.put(route('category.update', {
+            id: category.id,
+            name: category.name
+        }))
+    }
+    status.value = 'Обновляем...'
+}
 
 const submit = () => {
-
     form.post('category/store', {
         preserveScroll: true
     })
@@ -67,4 +102,6 @@ provide('status', {
     status,
     submit
 })
+
+
 </script>
