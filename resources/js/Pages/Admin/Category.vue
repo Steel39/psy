@@ -72,7 +72,7 @@ const deleteCategory = (id) => {
     form.delete(route('category.delete', { id: id }), {
         preserveScroll: true,
     })
-    status.value = 'Удалено'
+    status.value = 'Категория удалена'
 }
 const editCategory = (id, index, field) => {
     const category = props.categories.find(category => category.id === id)
@@ -83,6 +83,7 @@ const editCategory = (id, index, field) => {
 
 const stopEdit = (index, field) => {
     isEdit.value[index] = { ...isEdit.value[index], [field]: false }
+    status.value = 'Все хорошо =)'
 }
 const updateCategory = (id, index, field) => {
     const category = props.categories.find(category => category.id === id)
@@ -90,7 +91,7 @@ const updateCategory = (id, index, field) => {
         form.put(route('category.update', {id: id}))
     }
     isEdit.value[index] = { ...isEdit.value[index], [field]: false }
-    status.value = 'Обновлена категория'
+    status.value = 'Категория обновлена'
     form.reset()
 }
 
@@ -98,6 +99,7 @@ const submit = () => {
     form.post('category/store', {
         preserveScroll: true
     })
+    status.value = 'Добавлена новая категория =)'
     form.reset()
 }
 provide('status', {

@@ -66,6 +66,7 @@ const editTag = (id, index, field) => {
 }
 const stopEdit = (index, field) => {
     isEdit.value[index] = { ...isEdit.value[index], [field]: false }
+    status.value = 'Все хорошо =)'
     form.reset()
 }
 
@@ -75,6 +76,7 @@ const updateTag = (id, index, field) => {
         form.patch(route('tag.update', tag.id))
         console.log
     }
+    status.value = 'Тег обновлен ;)'
     isEdit.value[index] = { ...isEdit.value[index], [field]: false }
     form.reset()
 }
@@ -92,7 +94,7 @@ const submit = () => {
         preserveScroll: true,
     })
     form.reset()
-    status.value = 'ok =)'
+    status.value = 'Добавили новый тег =)'
 }
 
 </script>

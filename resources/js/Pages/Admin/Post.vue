@@ -5,13 +5,29 @@
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
                         <Link :href="route('createPost')">
-                            Создадим новывй пост
+                            <button class="rounded-md bg-emerald-800 border-lime-400 font-bold px-2 py-2 
+                                           hover:bg-indigo-800 ">
+                                Новый пост
+                            </button>
                         </Link>
                     </div>
                 </div>
                 <slot/>
                 <div class="relative mt-2 overflow-x-auto shadow-md sm:rounded-lg">
                     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead class="bg-white border-b font-bold
+                                        dark:bg-gray-800 dark:border-gray-700
+                                        hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td class="px-6 py-4">
+                                Название
+                            </td>
+                            <td class="px-6 py-4">
+                                Описание
+                            </td>
+                            <td class="px-6 py-4">
+                                Опции
+                            </td>
+                        </thead>
                         <tbody>
                             <tr class="bg-white border-b 
                                         dark:bg-gray-800 dark:border-gray-700
@@ -22,14 +38,21 @@
                                     пост 1
 
                                 </td>
-                                <td>
-                                    <button click=""></button>
+                                <td class="px-6 py-4 font-medium text-gray-900
+                                                         whitespace-nowrap dark:text-white">
+                                    Пост о том то
                                 </td>
-                                <td>
-                                    Действие1
-                                </td>
-                                <td>
-                                    Действие1
+                                <td class="px-6 py-4 font-medium text-gray-900
+                                                         whitespace-nowrap dark:text-white">
+                                    <span>
+                                        Действие1
+                                    </span>
+                                    <span >
+                                        Действие2
+                                    </span>
+                                    <span>
+                                        Действие3
+                                    </span>
                                 </td>
                             </tr>
 
