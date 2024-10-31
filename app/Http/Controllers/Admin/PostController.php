@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -22,7 +24,12 @@ class PostController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/CreatePost');
+        $tags = Tag::all()->toArray();
+        $categories = Category::all()->toArray();
+        return Inertia::render('Admin/CreatePost', [
+            'tags' => $tags,
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -30,7 +37,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->image);
+        dd($request->only('category'));
     }
 
     /**
