@@ -20,7 +20,7 @@
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <tbody>
-                                <tr v-for="(category, index) in categories" :key="category.id" class="bg-white border-b 
+                                <tr v-for="(category, index) in categories" :key="category.id" class="bg-white border-b
                                         dark:bg-gray-800 dark:border-gray-700
                                         hover:bg-gray-50 dark:hover:bg-gray-600">
 
@@ -34,7 +34,7 @@
                                     </td>
                                     <td>
                                         <button class="rounded-md w-1/2 h-8 shadow-md hover:shadow-xl
-                                         hover:shadow-lime-500 shadow-pink-400  text-black 
+                                         hover:shadow-red-500 shadow-pink-400  text-black
                                          font-bold bg-gradient-to-r from-red-400 to-pink-400"
                                             @click="deleteCategory(category.id)">DEL</button>
                                     </td>
