@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Service\PostService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -59,6 +60,7 @@ class PostController extends Controller
     public function show(Post $id)
     {
         $post = Post::with(['tags', 'category'])->findOrFail($id->id);
+        $post->time = Carbon::parse($post->created_at)->toDayDateTimeString();
         return Inertia::render('Admin/ShowPost', [
             'post' => $post,
         ]);

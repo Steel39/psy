@@ -14,7 +14,7 @@
                 </div>
                 <slot/>
                 <div class="relative mt-2 overflow-x-auto shadow-md sm:rounded-lg">
-                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <table class=" w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <thead class="bg-white border-b font-bold
                                         dark:bg-gray-800 dark:border-gray-700
                                         hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -44,7 +44,7 @@
                                 </td>
                                 <td class="px-6 py-4 font-medium text-gray-900
                                                          whitespace-nowrap dark:text-white">
-                                    <button @click="showPost(post.id)" class="text-green-500 hover:shadow-lg 
+                                    <button @click="showPost(post.id)" class="text-green-500 hover:shadow-lg
                                         hover:shadow-green-400 p-2 rounded-md"  >
                                         Show
                                     </button>
