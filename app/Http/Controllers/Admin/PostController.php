@@ -22,7 +22,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Admin/Post', []);
+        $posts = Post::all()->toArray();
+        return Inertia::render('Admin/Post', [
+            'posts' => $posts,
+        ]);
     }
 
     /**
@@ -51,9 +54,9 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(Post $id)
     {
-        //
+        dd($id);
     }
 
     /**

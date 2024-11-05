@@ -36,6 +36,8 @@ Route::prefix('dashboard')->group(function () {
         Route::get('/', [PostController::class, 'index'])->name('post.index');
         Route::get('/create', [PostController::class, 'create'])->name('createPost');
         Route::post('/store', [PostController::class, 'store'])->name('storePost');
+        Route::get('/show/{id}', [PostController::class, 'show'])->name('post.show');
+        Route::delete('/delete/{id}', [PostController::class, 'delete'])->name('post.delete');
     });
     Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'tag'], function () {
         Route::get('/', [TagController::class, 'index'])->name('tag.index');

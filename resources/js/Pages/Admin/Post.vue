@@ -29,30 +29,27 @@
                             </td>
                         </thead>
                         <tbody>
-                            <tr class="bg-white border-b
+                            <tr v-for="post in posts" key='post.id' class="bg-white border-b
                                         dark:bg-gray-800 dark:border-gray-700
                                         hover:bg-gray-50 dark:hover:bg-gray-600">
 
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900
                                                          whitespace-nowrap dark:text-white">
-                                    пост 1
+                                    {{ post.title }}
 
                                 </td>
                                 <td class="px-6 py-4 font-medium text-gray-900
                                                          whitespace-nowrap dark:text-white">
-                                    Пост о том то
+                                    {{ post.description }}
                                 </td>
                                 <td class="px-6 py-4 font-medium text-gray-900
                                                          whitespace-nowrap dark:text-white">
-                                    <span>
-                                        Действие1
-                                    </span>
-                                    <span >
-                                        Действие2
-                                    </span>
-                                    <span>
-                                        Действие3
-                                    </span>
+                                    <button @click="showPost(post.id)" class="text-green-500"  >
+                                        Show
+                                    </button>
+                                    <button class="ml-10 text-red-500">
+                                        Del
+                                    </button>
                                 </td>
                             </tr>
 
@@ -77,8 +74,15 @@ provide('status', {
     status
 })
 
+const props = defineProps ({
+    posts: Object
+})
+
 const showPost = (id) => {
-    Inertia.get(route('post.index', { id: id }))
+    Inertia.get(route('post.show', { id: id }))
+}
+const deletePost = (id) => {
+    Inertia.delete(route('post.delete', { id: id}))
 }
 
 const createPost = () => {
@@ -86,5 +90,5 @@ const createPost = () => {
     })
     )
 }
-
+console.log(props.posts)
 </script>
