@@ -2,8 +2,6 @@
     <AuthenticatedLayout>
         <div class="py-12">
             <form @submit.prevent="submit">
-
-
                 <div class=" mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div class="grid grid-cols-2 gap-2">
                         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
@@ -36,7 +34,7 @@
                                 <label for="categories" class="p-6 text-gray-900 font-bold dark:text-gray-100">
                                     Категория
                                 </label>
-                                <select id="categories" v-model="form.category" class="mt-4 block ml-6 bg-yellow-100 w-1/2 pl-30 mb-4
+                                <select id="categories" v-model="form.category_id" class="mt-4 block ml-6 bg-yellow-100 w-1/2 pl-30 mb-4
                             border-gray-300 focus:outline-none focus:ring-indigo-500
                              focus:border-indigo-500 sm:text-sm rounded-md">
                                     <option value="" disabled>Выберите Категорию</option>
@@ -56,7 +54,9 @@
                                     <button
                                         v-for="tag in tags"
                                         :key="tag.id"
-                                        :class="['mr-2 mb-2 px-4 py-2 rounded-md  hover:shadow hover:shadow-gray-300 ', selectedTags.includes(tag.id) ? 'bg-yellow-100 text-gray-800 shadow-md shadow-blue-200' : 'bg-white  text-black dark:text-gray-200 dark:bg-gray-800' ]"
+                                        :class="['mr-2 mb-2 px-4 py-2 rounded-md  hover:shadow-sm hover:shadow-gray-300 ', tag_ids.includes(tag.id)
+                                        ? 'bg-yellow-100 text-gray-800 shadow-sm shadow-blue-200'
+                                        : 'bg-white  text-black dark:text-gray-200 dark:bg-gray-800' ]"
                                         @click.prevent="toggleTag(tag.id)"
                                     >
                                         {{ tag.name }}
@@ -97,13 +97,13 @@
                         </div>
                     </div>
                     <div class="mt-2 grid grid-cols-2 overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
-                        <div class="p-4 ml-auto">
+                        <div class="p-4 mx-auto ml-auto">
                             <label class="inline-flex items-center mr-4">
-                                <input type="radio" value="true" v-model="form.isPublished" class="form-radio bg-gradient-to-tl from-green-500 to-cyan-300" />
+                                <input type="radio" :value="true" v-model="form.is_published" class="form-radio bg-gradient-to-tl from-green-500 to-cyan-300" />
                                 <span class="ml-2  text-gray-900 font-bold dark:text-gray-100">Опубликовать</span>
                             </label>
                             <label class="inline-flex items-center">
-                                <input type="radio" value="false" v-model="form.isPublished" class="form-radio bg-gradient-to-tl from-gray-200 to-zinc-400" />
+                                <input type="radio" :value="false" v-model="form.is_published" class="form-radio bg-gradient-to-tl from-gray-200 to-zinc-400" />
                                 <span class="ml-2 text-gray-900 font-bold dark:text-gray-100">Черновик</span>
                             </label>
                         </div>
@@ -125,26 +125,24 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import {provide, ref} from "vue";
 import {useForm} from "@inertiajs/vue3";
-import Dropdown from "@/Components/Dropdown.vue";
 
 const form = useForm({
     title: '',
     description: '',
     content: '',
     image: null,
-    isPublished: false,
-    category: '',
-    selectedTags: []
+    is_published: false,
+    category_id: '',
+    tag_ids: []
 })
 const previewUrl = ref(null);
-const selectedTags = ref([]);
+const tag_ids = ref([]);
 
 const props = defineProps({
     Post: Object,
     errors: Object,
     categories: Object,
     tags: Object,
-
 })
 const onFileChange = (event) => {
     const file = event.target.files[0];
@@ -158,13 +156,13 @@ const onFileChange = (event) => {
 };
 
 const toggleTag = (tagId) => {
-    const index = selectedTags.value.indexOf(tagId);
+    const index = tag_ids.value.indexOf(tagId);
     if (index === -1) {
-        selectedTags.value.push(tagId);
+        tag_ids.value.push(tagId);
     } else {
-        selectedTags.value.splice(index, 1);
+        tag_ids.value.splice(index, 1);
     }
-    form.selectedTags = selectedTags.value
+    form.tag_ids = tag_ids.value
 };
 
 
@@ -177,15 +175,18 @@ const submit = () => {
             previewUrl.value = null
         },
         onError: (errors) => {
-            form.errors.value = Object.values(errors.errors).flat();
+            form.errors.value = errors.errors;
+            status.value = form.errors
         },
     })
-    console.log(selectedTags.value)
+    console.log(form.is_published)
+    console.log(form.errors)
 }
 
 const status = ref('Создаем новый пост =)')
 provide('status', {
-    status
+    status,
+    submit
 })
 
 const fileSize = (bytes) => {

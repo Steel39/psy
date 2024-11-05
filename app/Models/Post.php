@@ -3,21 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Category;
-use App\Models\Tag;
 
 class Post extends Model
 {
-    protected $table = 'post';
-    protected $fillable = ['title', 'description', 'content', 'is_published', 'image_path'];
+    protected $table = 'posts';
+    protected $fillable = ['title', 'description', 'content', 'is_published', 'image', 'category_id'];
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->belongsToMany(Tag::class, 'post_tags', 'post_id', 'tag_id');
     }
 }

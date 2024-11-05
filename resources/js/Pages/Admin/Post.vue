@@ -5,8 +5,8 @@
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
                         <Link :href="route('createPost')">
-                            <button class="rounded-md bg-emerald-500 border-lime-400 font-bold px-2 py-2
-                                           hover:bg-cyan-400 hover:shadow-lg hover:shadow-cyan-400">
+                            <button class="rounded-md bg-stone-500 border-lime-400 font-bold px-2 py-2
+                                           hover:text-cyan-400 hover:shadow-md hover:shadow-cyan-400">
                                 Новый пост
                             </button>
                         </Link>

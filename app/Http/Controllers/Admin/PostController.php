@@ -3,14 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePostRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Service\PostService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class PostController extends Controller
 {
+    public function __construct(private readonly PostService $postService)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -35,9 +41,11 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        dd($request->all());
+        $data = $request->validated();
+        $this->postService->storePost($data);
+        return redirect(route('post.index'));
     }
 
     /**
