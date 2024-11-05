@@ -11,6 +11,8 @@ use App\Service\PostService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
+use function Pest\Laravel\post;
+
 class PostController extends Controller
 {
     public function __construct(private readonly PostService $postService)
@@ -56,7 +58,10 @@ class PostController extends Controller
      */
     public function show(Post $id)
     {
-        dd($id);
+        $post = Post::with(['tags', 'category'])->findOrFail($id->id);
+        return Inertia::render('Admin/ShowPost', [
+            'post' => $post,
+        ]);
     }
 
     /**

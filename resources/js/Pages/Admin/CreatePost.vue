@@ -37,7 +37,7 @@
                                 <select id="categories" v-model="form.category_id" class="mt-4 block ml-6 bg-yellow-100 w-1/2 pl-30 mb-4
                             border-gray-300 focus:outline-none focus:ring-indigo-500
                              focus:border-indigo-500 sm:text-sm rounded-md">
-                                    <option value="" disabled>Выберите Категорию</option>
+                                    <option :value="null" disabled>Выберите Категорию</option>
                                     <option class="bg-yellow-100" v-for="category in categories" :key="category.id"
                                             :value="category.id">
                                         {{ category.name }}
@@ -47,7 +47,7 @@
                         </div>
                         <div class="mt-2 overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
                             <div class="mb-4">
-                                <label for="categories" class="p-6 text-gray-900 font-bold dark:text-gray-100">
+                                <label for="tags" class="p-6 text-gray-900 font-bold dark:text-gray-100">
                                     Теги
                                 </label>
                                 <div class="flex flex-wrap mt-4 p-6">

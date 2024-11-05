@@ -5,7 +5,7 @@
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
                         <Link :href="route('createPost')">
-                            <button class="rounded-md bg-stone-500 border-lime-400 font-bold px-2 py-2
+                            <button class="rounded-md bg-stone-200 dark:bg-indigo-800 border-lime-400 font-bold px-2 py-2
                                            hover:text-cyan-400 hover:shadow-md hover:shadow-cyan-400">
                                 Новый пост
                             </button>
@@ -44,10 +44,11 @@
                                 </td>
                                 <td class="px-6 py-4 font-medium text-gray-900
                                                          whitespace-nowrap dark:text-white">
-                                    <button @click="showPost(post.id)" class="text-green-500"  >
+                                    <button @click="showPost(post.id)" class="text-green-500 hover:shadow-lg 
+                                        hover:shadow-green-400 p-2 rounded-md"  >
                                         Show
                                     </button>
-                                    <button class="ml-10 text-red-500">
+                                    <button class="ml-10 text-black p-2 rounded-md hover:shadow-lg hover:shadow-red-400">
                                         Del
                                     </button>
                                 </td>
@@ -64,11 +65,10 @@
 </template>
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Inertia } from "@inertiajs/inertia";
-import { Link } from "@inertiajs/vue3";
+import { Link, useForm } from "@inertiajs/vue3";
 import { provide, ref } from "vue";
 
-
+const form = useForm({})
 const status = ref('Хорошего дня!')
 provide('status', {
     status
@@ -79,14 +79,14 @@ const props = defineProps ({
 })
 
 const showPost = (id) => {
-    Inertia.get(route('post.show', { id: id }))
+    form.get(route('post.show', { id: id }))
 }
 const deletePost = (id) => {
-    Inertia.delete(route('post.delete', { id: id}))
+    form.delete(route('post.delete', { id: id}))
 }
 
 const createPost = () => {
-    Inertia.get(route('post.create', {
+    form.get(route('post.create', {
     })
     )
 }
