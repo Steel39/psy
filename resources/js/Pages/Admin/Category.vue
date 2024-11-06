@@ -5,12 +5,15 @@
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
                     <form @submit.prevent="submit">
                         <div class="flex flex-auto p-6 text-gray-900 dark:text-gray-800">
-                            <input id="name" v-model="form.name" type="text"
-                                class="mt-1 block w-full rounded-md bg-gray-500 border-transparent
-                                 focus:border-gray-500 focus:bg-white focus:ring-0">
-                            <button type="submit" @click="click" :disabled="form.processing"
-                                class="mt-1 ml-2 block w-1/4 rounded-md bg-green-700 border-transparent
-                                 focus:border-gray-800 focus:bg-emerald-800 focus:ring-0">
+                            <input id="name" v-model="form.name" type="text" 
+                                class="mt-1 block w-full rounded-md bg-gray-200 border-transparent
+                                 focus:border-gray-500 focus:text-gray-600 focus:bg-white focus:ring-0
+                                 dark:bg-gray-600 dark:text-gray-200 font-semibold">
+                            <button type="submit" @click="click" :disabled="form.processing" 
+                                class="mt-1 ml-2 block w-1/4 rounded-md bg-gray-200 border-transparent
+                                 focus:bg-transparent focus:text-white focus:ring-0
+                                 hover:shadow-lg hover:shadow-green-400 hover:text-green-500
+                                 dark:bg-gray-600 dark:text-gray-200 font-semibold">
                                 Добавить
                             </button>
                         </div>
@@ -30,12 +33,13 @@
                                             class="rounded-md bg-gradient-to-r from-cyan-200 to-emerald-300 text-black"
                                             @blur="stopEdit(index, 'name')"
                                             @keyup.enter="updateCategory(category.id, index, 'name')" />
-                                        <span v-else @click="editCategory(category.id, index, 'name')">{{ category.name }}</span>
+                                        <span v-else @click="editCategory(category.id, index, 'name')">{{ category.name
+                                            }}</span>
                                     </td>
                                     <td>
-                                        <button class="rounded-md w-1/2 h-8 shadow-md hover:shadow-xl
-                                         hover:shadow-red-500 shadow-pink-400  text-black
-                                         font-bold bg-gradient-to-r from-red-400 to-pink-400"
+                                        <button class="rounded-md w-1/2 h-8 hover:shadow-lg
+                                         hover:shadow-red-500 hover:text-red-500 shadow-red-400  text-black
+                                         font-bold "
                                             @click="deleteCategory(category.id)">DEL</button>
                                     </td>
                                 </tr>
@@ -88,7 +92,7 @@ const stopEdit = (index, field) => {
 const updateCategory = (id, index, field) => {
     const category = props.categories.find(category => category.id === id)
     if (category) {
-        form.put(route('category.update', {id: id}))
+        form.put(route('category.update', { id: id }))
     }
     isEdit.value[index] = { ...isEdit.value[index], [field]: false }
     status.value = 'Категория обновлена'
@@ -96,11 +100,16 @@ const updateCategory = (id, index, field) => {
 }
 
 const submit = () => {
-    form.post('category/store', {
-        preserveScroll: true
-    })
-    status.value = 'Добавлена новая категория =)'
-    form.reset()
+    if (form.name !== '') {
+        form.post('category/store', {
+            preserveScroll: true
+        })
+        status.value = 'Добавлена новая категория =)'
+        form.reset()
+    } else {
+        status.value = 'Поле не должно быть пустым...'
+    }
+
 }
 provide('status', {
     status,

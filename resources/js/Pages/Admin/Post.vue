@@ -5,8 +5,8 @@
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
                         <Link :href="route('createPost')">
-                            <button class="rounded-md bg-stone-200 dark:bg-indigo-800 border-lime-400 font-bold px-2 py-2
-                                           hover:text-cyan-400 hover:shadow-md hover:shadow-cyan-400">
+                            <button class="rounded-md bg-gray-200 dark:bg-gray-600 border-lime-400 font-bold px-2 py-2
+                                           hover:text-cyan-400 hover:shadow-lg hover:shadow-cyan-400">
                                 Новый пост
                             </button>
                         </Link>
@@ -44,11 +44,14 @@
                                 </td>
                                 <td class="px-6 py-4 font-medium text-gray-900
                                                          whitespace-nowrap dark:text-white">
-                                    <button @click="showPost(post.id)" class="text-green-500 hover:shadow-lg
+                                    <button @click="showPost(post.id)" class="text-gray-500 dark:text-gray-300  hover:text-green-500 hover:shadow-lg
                                         hover:shadow-green-400 p-2 rounded-md"  >
                                         Show
                                     </button>
-                                    <button class="ml-10 text-black p-2 rounded-md hover:shadow-lg hover:shadow-red-400">
+                                    <button @click="editPost(post.id)" class="ml-10 text-gray-500 dark:text-gray-300 p-2 rounded-md hover:shadow-lg hover:shadow-blue-400 hover:text-blue-500">
+                                        Edit
+                                    </button>
+                                    <button @click="deletePost(post.id)" class="ml-10 text-gray-500 dark:text-gray-300  p-2 rounded-md hover:shadow-lg hover:shadow-red-400 hover:text-red-500">
                                         Del
                                     </button>
                                 </td>
@@ -78,11 +81,19 @@ const props = defineProps ({
     posts: Object
 })
 
+const editPost = (id) => {
+    form.get(route('post.edit', { id: id}), {
+        preserveScroll: true
+    })
+}
+
 const showPost = (id) => {
     form.get(route('post.show', { id: id }))
 }
 const deletePost = (id) => {
-    form.delete(route('post.delete', { id: id}))
+    form.delete(route('post.delete', { id: id}), { 
+        preserveScroll: true
+    })
 }
 
 const createPost = () => {

@@ -17,16 +17,16 @@ console.log(imagePath)
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="flex flex-col">
-                    <div class="bg-gray-200 dark:bg-gray-700  rounded-lg  mt-4 py-8">
+                    <div class="bg-gray-200 dark:bg-gray-700  rounded-lg py-8">
                         <div class="grid grid-cols-2 gap-6 rounded-lg bg-gray-200 dark:text-gray-200 dark:bg-gray-700">
                             <div class="container  mx-auto p-4">
                                 <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-400 bg-gray-300 dark:bg-gray-800/40 shadow-lg  rounded-[10px] p-2 mb-2">
                                     {{ post.title }}</h1>
                                 <p class="text-gray-400 text-right dark:text-gray-400">Создано {{ post.time }}</p>
                             </div>
-                            <div class="container md:items-center bg-gradient-to-br from-zinc-200 shadow-md to-gray-400 px-4
-                             dark:bg-gradient-to-br dark:from-gray-600 dark:to-zinc-600 rounded-xl -ml-4 p-4">
-                                <h4 class="font-semibold text-gray-800 text-center dark:text-gray-400 mb-2">
+                            <div class="container p-2 w-4/5 mx-auto md:items-center bg-gradient-to-br from-zinc-200 shadow-md to-gray-400 px-4
+                             dark:bg-gradient-to-br dark:from-gray-600 dark:to-zinc-600 rounded-xl ">
+                                <h4 class="font-semibold text-gray-800 text-right  dark:text-gray-300 mb-2">
                                     {{ post.description }}</h4>
                             </div>
                         </div>

@@ -16,9 +16,7 @@ use function Pest\Laravel\post;
 
 class PostController extends Controller
 {
-    public function __construct(private readonly PostService $postService)
-    {
-    }
+    public function __construct(private readonly PostService $postService) {}
 
     /**
      * Display a listing of the resource.
@@ -69,24 +67,32 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit(Post $id)
     {
-        //
+        $post = Post::with(['tags', 'category'])->findOrFail($id->id);
+        $tags = Tag::all()->toArray();
+        $categories = Category::all()->toArray();
+        return Inertia::render('Admin/EditPost', [
+            'tags' => $tags,
+            'categories' => $categories,
+            'post' => $post,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Post $id)
     {
-        //
+        dd($request->image);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy(Post $id)
     {
-        //
+        $id->delete();
+        return redirect()->back();
     }
 }
