@@ -88,10 +88,15 @@
                                     {{ form.progress.percentage }}%
                                 </progress>
                                 <div v-if="previewUrl">
+                                    <p class="mt-4">Новое изображение</p>
                                     <img :src="previewUrl" :alt="'Предпросмотр: ' + form.image.name">
                                     <p>Размер: {{ form.image.size | fileSize }}</p>
                                 </div>
-                                
+                                <div v-if="form.image">
+                                    <p class="mt-4"> Текущее изображение</p>
+                                    <img :src="imagePath" :alt="'Предпросмотр: ' + form.image.name">
+                                    <p>Размер: {{ form.image.size | fileSize }}</p>
+                                </div>
                                 <div v-if="form.errors.image">
                                     <p style="color: red;">{{ form.errors.image }}</p>
                                 </div>
@@ -142,11 +147,14 @@ const form = useForm({
     image: props.post.image,
     is_published: props.post.is_published,
     category_id: props.post.category_id,
-    tag_ids: props.post.tag_ids
+    tag_ids: props.post.tags.map(tag => tag.id),
+    _method: 'put'
 })
+
 const previewUrl = ref(null);
-const tag_ids = ref([]);
+
 const imagePath = `/storage/${props.post.image}`
+const tag_ids = ref(props.post.tags.map(tag => tag.id));
 
 const onFileChange = (event) => {
     const file = event.target.files[0];
@@ -170,9 +178,9 @@ const toggleTag = (tagId) => {
 };
 
 
-console.log(props.tags, props.categories)
+console.log(props.post.tags, props.categories)
 const submit = (id) => {
-    form.patch(route('post.update', {id: id}), {
+    form.post(route('post.update', {id: id}), {
         preserveScroll: true,
         onSuccess: () => {
             form.reset()
@@ -183,11 +191,10 @@ const submit = (id) => {
             status.value = form.errors
         },
     })
-    console.log(form.is_published)
     console.log(form.image)
 }
 
-const status = ref('Создаем новый пост =)')
+const status = ref('Редактируем пост...')
 provide('status', {
     status,
     submit

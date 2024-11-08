@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
@@ -82,9 +83,11 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $id)
+    public function update(UpdatePostRequest $request, Post $id)
     {
-        dd($request->image);
+        $data = $request->validated();
+        $status = $this->postService->updatePost($data, $id);
+        return redirect()->route('post.index');
     }
 
     /**

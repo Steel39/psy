@@ -38,7 +38,7 @@ Route::prefix('dashboard')->group(function () {
         Route::post('/store', [PostController::class, 'store'])->name('storePost');
         Route::get('/show/{id}', [PostController::class, 'show'])->name('post.show');
         Route::get('/edit/{id}', [PostController::class, 'edit'])->name('post.edit');
-        Route::patch('/update/{id}', [PostController::class, 'update'])->name('post.update');
+        Route::put('/update/{id}', [PostController::class, 'update'])->name('post.update');
         Route::delete('/delete/{id}', [PostController::class, 'destroy'])->name('post.delete');
     });
     Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'tag'], function () {
