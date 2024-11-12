@@ -22,18 +22,20 @@ class PostService
         $post->tags()->attach($tagIds);
     }
 
-    public function updatePost($data, $id)
+    public function updatePost($data, $id):void
     {
-        if (isset($data['tag_ids'])) {
-            $tagIds = $data['tag_ids'];
-            unset($data['tag_ids']);
-        }
-        if (isset($data['image'])) {
+        if ($data['image'] ===  null) {
+            unset($data['image']);
+        } else {
             $data['image'] = Storage::disk('public')->put('posts', $data['image']);
         }
-        
+
+        $tagIds = $data['tag_ids'] ?? null;
+        unset($data['tag_ids']);
+
         $id->update($data);
-        if (isset($tagIds)) {
+        
+        if ($tagIds) {
             $id->tags()->sync($tagIds);
         }
     }

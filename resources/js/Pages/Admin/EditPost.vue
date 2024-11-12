@@ -92,10 +92,10 @@
                                     <img :src="previewUrl" :alt="'Предпросмотр: ' + form.image.name">
                                     <p>Размер: {{ form.image.size | fileSize }}</p>
                                 </div>
-                                <div v-if="form.image">
+                                <div>
                                     <p class="mt-4"> Текущее изображение</p>
-                                    <img :src="imagePath" :alt="'Предпросмотр: ' + form.image.name">
-                                    <p>Размер: {{ form.image.size | fileSize }}</p>
+                                    <img :src="imagePath" alt="Изображение отсутствует">
+                                    
                                 </div>
                                 <div v-if="form.errors.image">
                                     <p style="color: red;">{{ form.errors.image }}</p>
@@ -144,7 +144,7 @@ const form = useForm({
     title: props.post.title,
     description: props.post.description,
     content: props.post.content,
-    image: props.post.image,
+    image: null,
     is_published: props.post.is_published,
     category_id: props.post.category_id,
     tag_ids: props.post.tags.map(tag => tag.id),
@@ -153,7 +153,8 @@ const form = useForm({
 
 const previewUrl = ref(null);
 
-const imagePath = `/storage/${props.post.image}`
+const imagePath = ref(`/storage/${props.post.image}`)
+
 const tag_ids = ref(props.post.tags.map(tag => tag.id));
 
 const onFileChange = (event) => {
@@ -163,7 +164,7 @@ const onFileChange = (event) => {
         previewUrl.value = URL.createObjectURL(file);
     } else {
         form.image = null;
-        previewUrl.value = null;
+        previewUrl.value = imagePath;
     }
 };
 
@@ -179,7 +180,21 @@ const toggleTag = (tagId) => {
 
 
 console.log(props.post.tags, props.categories)
+
+const deletePostImage = (id) => {
+    form.update(route('post.image.delete', { id: id}), {
+        preserveScroll: true,
+        onSuccess: () => {
+            previewUrl.value = null
+            status.value = "Изорбражение удалено"
+        },
+    })
+}
+
 const submit = (id) => {
+    if(!form.image instanceof File) {
+        form.image = null
+    }
     form.post(route('post.update', {id: id}), {
         preserveScroll: true,
         onSuccess: () => {

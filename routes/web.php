@@ -40,6 +40,7 @@ Route::prefix('dashboard')->group(function () {
         Route::get('/edit/{id}', [PostController::class, 'edit'])->name('post.edit');
         Route::put('/update/{id}', [PostController::class, 'update'])->name('post.update');
         Route::delete('/delete/{id}', [PostController::class, 'destroy'])->name('post.delete');
+        Route::update('/delete_image/{id}', [PostController::class, 'deletePostImage'])->name('post.delete.image');
     });
     Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'tag'], function () {
         Route::get('/', [TagController::class, 'index'])->name('tag.index');

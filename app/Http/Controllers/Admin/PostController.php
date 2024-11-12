@@ -90,6 +90,11 @@ class PostController extends Controller
         return redirect()->route('post.index');
     }
 
+    public function deletePostImage(Post $id) 
+    {
+        Post::query()->update(['image' => null]);
+    }
+
     /**
      * Remove the specified resource from storage.
      */
