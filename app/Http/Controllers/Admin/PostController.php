@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Inertia\Response;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
@@ -22,7 +24,7 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Response
     {
         $posts = Post::all()->toArray();
         return Inertia::render('Admin/Post', [
@@ -33,7 +35,7 @@ class PostController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Response
     {
         $tags = Tag::all()->toArray();
         $categories = Category::all()->toArray();
@@ -56,7 +58,7 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Post $id)
+    public function show(Post $id): Response
     {
         $post = Post::with(['tags', 'category'])->findOrFail($id->id);
         $post->time = Carbon::parse($post->created_at)->toDayDateTimeString();
@@ -68,8 +70,8 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $id)
-    {
+public function edit(Post $id): Response
+    {$status =
         $post = Post::with(['tags', 'category'])->findOrFail($id->id);
         $tags = Tag::all()->toArray();
         $categories = Category::all()->toArray();
@@ -86,11 +88,11 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request, Post $id)
     {
         $data = $request->validated();
-        $status = $this->postService->updatePost($data, $id);
+        $this->postService->updatePost($data, $id);
         return redirect()->route('post.index');
     }
 
-    public function deletePostImage(Post $id) 
+    public function deletePostImage(Post $id)
     {
         Post::query()->update(['image' => null]);
     }
@@ -98,7 +100,7 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $id)
+    public function destroy(Post $id): RedirectResponse
     {
         $id->delete();
         return redirect()->back();
