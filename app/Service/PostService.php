@@ -34,7 +34,7 @@ class PostService
         unset($data['tag_ids']);
 
         $id->update($data);
-        
+
         if ($tagIds) {
             $id->tags()->sync($tagIds);
         }

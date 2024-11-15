@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Certificate;
+use App\Http\Requests\CertificateRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class CertificateController extends Controller
@@ -25,39 +27,34 @@ class CertificateController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CertificateRequest $request): void
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Certificate $certificate)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Certificate $certificate)
-    {
-        //
+        $data = $request->validated();
+        if (isset($data['image'])) {
+            $data['image'] = Storage::disk('public')->put('certificates', $data['image']);
+        }
+        Certificate::create($data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Certificate $certificate)
+    public function update(CertificateRequest $request, Certificate $certificate)
     {
-        //
+        $data = $request->validated();
+        if ($data['image'] !== null ) {
+            $data['image'] = Storage::disk('public')->put('certificates', $data['image']);
+
+        } else {
+            unset($data['image']);
+        }
+        $certificate->update($data);
     }
 
     /**
@@ -65,6 +62,6 @@ class CertificateController extends Controller
      */
     public function destroy(Certificate $certificate)
     {
-        //
+        $certificate->delete();
     }
 }
