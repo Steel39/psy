@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\CertificateController;
+use App\Http\Controllers\QuestionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -19,6 +20,8 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/', [QuestionController::class, 'index'])->name('certificate.index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -54,6 +57,9 @@ Route::prefix('dashboard')->group(function () {
         Route::post('/store', [CertificateController::class, 'store'])->name('certificate.store');
         Route::delete('/delete/{id}', [CertificateController::class, 'destroy'])->name('certificate.delete');
         Route::patch('/update/{id}', [CertificateController::class, 'update'])->name('certificate.update');
+    });
+    Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'question'], function () {
+        Route::get('/', [QuestionController::class, 'index'])->name('admin.question.index');
     });
 });
 

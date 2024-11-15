@@ -64,6 +64,12 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     Сертификаты
                                 </NavLink>
+                                <NavLink
+                                    :href="route('admin.question.index')"
+                                    :active="route().current('admin.question.index')"
+                                >
+                                    Вопросы
+                                </NavLink>
 
                             </div>
                         </div>

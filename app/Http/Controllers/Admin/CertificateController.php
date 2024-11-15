@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Certificate;
 use App\Http\Requests\CertificateRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -33,13 +34,14 @@ class CertificateController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CertificateRequest $request): void
+    public function store(CertificateRequest $request): RedirectResponse
     {
         $data = $request->validated();
         if (isset($data['image'])) {
             $data['image'] = Storage::disk('public')->put('certificates', $data['image']);
         }
         Certificate::create($data);
+        return redirect()->back();
     }
 
     /**
@@ -60,8 +62,9 @@ class CertificateController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Certificate $certificate)
+    public function destroy(Certificate $id): RedirectResponse
     {
-        $certificate->delete();
+        $id->delete();
+        return redirect()->back();
     }
 }

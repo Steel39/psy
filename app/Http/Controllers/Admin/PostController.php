@@ -71,7 +71,7 @@ class PostController extends Controller
      * Show the form for editing the specified resource.
      */
 public function edit(Post $id): Response
-    {$status =
+    {
         $post = Post::with(['tags', 'category'])->findOrFail($id->id);
         $tags = Tag::all()->toArray();
         $categories = Category::all()->toArray();
