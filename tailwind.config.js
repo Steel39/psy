@@ -20,6 +20,9 @@ export default {
         container: {
             center: true,
         },
+        duration: {
+            button: 200
+        }
     },
 
 

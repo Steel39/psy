@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\CertificateController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -40,13 +41,19 @@ Route::prefix('dashboard')->group(function () {
         Route::get('/edit/{id}', [PostController::class, 'edit'])->name('post.edit');
         Route::put('/update/{id}', [PostController::class, 'update'])->name('post.update');
         Route::delete('/delete/{id}', [PostController::class, 'destroy'])->name('post.delete');
-        Route::update('/delete_image/{id}', [PostController::class, 'deletePostImage'])->name('post.delete.image');
+        Route::put('/delete_image/{id}', [PostController::class, 'deletePostImage'])->name('post.delete.image');
     });
     Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'tag'], function () {
         Route::get('/', [TagController::class, 'index'])->name('tag.index');
         Route::post('/store', [TagController::class, 'store'])->name('tag.store');
         Route::delete('/delete/{id}', [TagController::class, 'destroy'])->name('tag.delete');
         Route::patch('/update/{id}', [TagController::class, 'update'])->name('tag.update');
+    });
+    Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'certificate'], function () {
+        Route::get('/', [CertificateController::class, 'index'])->name('certificate.index');
+        Route::post('/store', [CertificateController::class, 'store'])->name('certificate.store');
+        Route::delete('/delete/{id}', [CertificateController::class, 'destroy'])->name('certificate.delete');
+        Route::patch('/update/{id}', [CertificateController::class, 'update'])->name('certificate.update');
     });
 });
 

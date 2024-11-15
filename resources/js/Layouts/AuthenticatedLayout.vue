@@ -58,10 +58,18 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     Тэги
                                 </NavLink>
+                                <NavLink
+                                    :href="route('certificate.index')"
+                                    :active="route().current('certificate.index')"
+                                >
+                                    Сертификаты
+                                </NavLink>
+
                             </div>
                         </div>
-
-                        <StatusWindow/>
+                        <div class="w-full ml-5">
+                            <StatusWindow/>
+                        </div>
                         <div class="hidden sm:ms-6 sm:flex sm:items-center">
                             <!-- Settings Dropdown -->
                             <div class="relative ms-3">

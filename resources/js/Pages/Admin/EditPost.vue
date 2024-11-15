@@ -39,7 +39,7 @@
                             border-gray-300 focus:outline-none focus:ring-indigo-500
                              focus:border-indigo-500 sm:text-sm rounded-md">
                                     <option :value="null" disabled>Выберите Категорию</option>
-                                    <option class="bg-yellow-100" v-for="category in categories" :key="category.id"
+                                    <option class="bg-yellow-100  duration-200" v-for="category in categories" :key="category.id"
                                             :value="category.id">
                                         {{ category.name }}
                                     </option>
@@ -55,7 +55,7 @@
                                     <button
                                         v-for="tag in tags"
                                         :key="tag.id"
-                                        :class="['mr-2 mb-2 px-4 py-2 rounded-md  hover:shadow-sm hover:shadow-gray-300 ', tag_ids.includes(tag.id)
+                                        :class="['mr-2 mb-2 px-4 py-2 rounded-md  hover:shadow-sm hover:shadow-gray-300 duration-200 hover:duration-200', tag_ids.includes(tag.id)
                                         ? 'bg-yellow-100 text-gray-800 shadow-sm shadow-blue-200'
                                         : 'bg-white  text-black dark:text-gray-200 dark:bg-gray-800' ]"
                                         @click.prevent="toggleTag(tag.id)"
@@ -95,7 +95,7 @@
                                 <div>
                                     <p class="mt-4"> Текущее изображение</p>
                                     <img :src="imagePath" alt="Изображение отсутствует">
-                                    
+
                                 </div>
                                 <div v-if="form.errors.image">
                                     <p style="color: red;">{{ form.errors.image }}</p>
@@ -115,7 +115,7 @@
                             </label>
                         </div>
                         <div class="relativemt-2 p-4 ml-auto overflow-x-auto shadow-md shadow-lime-400 sm:rounded-lg">
-                            <button class="p-2 bg-gradient-to-br hover:shadow-lg hover:text-cyan-400 hover:shadow-cyan-400 from-gray-400 to-zinc-600 rounded-md text-gray-900
+                            <button class="p-2 bg-gradient-to-br hover:shadow-lg hover:text-cyan-400 hover:shadow-cyan-400 duration-200 from-gray-400 to-zinc-600 rounded-md text-gray-900
                                    font-bold dark:text-gray-100" type="submit" :disabled="form.processing">
                                 Сохранить
                             </button>

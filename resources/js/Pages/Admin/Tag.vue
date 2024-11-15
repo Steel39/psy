@@ -17,9 +17,9 @@
                     </form>
                 </div>
                 <div class="flex flexauto flex-wrap gap-4 flex-wrap mt-10">
-                    <div v-for="(tag, index) in tags" :key="tag.id" class="bg-gradient-to-tl from-cyan-300
-                           to-lime-300 text-black  font-bold py-2 px-4 rounded opacity-50">
-                           <input v-if="isEdit[index]?.name" v-model="form.name" type="text" class="rounded-md 
+                    <div v-for="(tag, index) in tags" :key="tag.id" class="bg-gradient-to-tl from-gray-300
+                           to-white text-black  font-bold py-2 px-4 rounded opacity-50">
+                           <input v-if="isEdit[index]?.name" v-model="form.name" type="text" class="rounded-md
                            bg-gradient-to-r from-cyan-200 to-emerald-300 text-black"
                            @blur="stopEdit(index, 'name')"
                            @keyup.enter="updateTag(tag.id, index, 'name')" />
@@ -61,7 +61,7 @@ const editTag = (id, index, field) => {
     const tag = props.tags.find(tag => tag.id === id)
     form.name = tag.name
     isEdit.value[index] = { ...isEdit.value[index], [field]: true }
-    
+
     status.value = 'Редактируем тег...'
 }
 const stopEdit = (index, field) => {
