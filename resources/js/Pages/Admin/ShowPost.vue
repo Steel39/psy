@@ -28,7 +28,7 @@ console.log(imagePath)
                                 dark:bg-gradient-to-br dark:from-gray-600 dark:to-zinc-600 rounded-xl ">
                                 <h4 class="font-semibold text-gray-800 text-right  dark:text-gray-300 mb-2">
                                     {{ post.description }}</h4>
-                                    <p class="text-gray-400 text-right dark:text-gray-400">Создано {{ post.time }}</p>
+                                    <p class="text-gray-600 text-right dark:text-gray-400">Создано {{ post.time }}</p>
                                 </div>
                             </div>
                         </div>

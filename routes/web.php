@@ -5,7 +5,8 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\CertificateController;
-use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\Admin\QuestionController;
+use App\Http\Controllers\UserQuestionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -21,7 +22,8 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/', [QuestionController::class, 'index'])->name('certificate.index');
+Route::get('/question', [UserQuestionController::class, 'index'])->name('user.question.index');
+Route::post('/question/store', [UserQuestionController::class, 'store'])->name('user.question.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

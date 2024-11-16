@@ -88,8 +88,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {defineProps, ref, provide} from 'vue';
 import {useForm} from "@inertiajs/vue3";
-import DangerButton from "@/Components/DangerButton.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
+
 
 const props = defineProps({
     certificates: Object,

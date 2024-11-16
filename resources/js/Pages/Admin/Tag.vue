@@ -7,10 +7,11 @@
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
                     <form @submit.prevent="submit">
                         <div class="flex flex-auto p-6 text-gray-900 dark:text-gray-800">
-                            <input id="name" v-model="form.name" type="text" class="mt-1 block w-full rounded-md bg-gray-500 border-transparent
-                                 focus:border-gray-500 focus:bg-white focus:ring-0">
-                            <button type="submit" @click="click" :disabled="form.processing" class="mt-1 ml-2 block w-1/4 rounded-md bg-green-700 border-transparent
-                                 focus:border-gray-800 focus:bg-emerald-800 focus:ring-0">
+                            <input id="name" v-model="form.name" type="text" class="mt-1 block w-full rounded-md bg-gray-200 border-transparent
+                                 focus:border-gray-500 focus:bg-white focus:shadow-inner focus:shadow-gray-600  focus:ring-0
+                                 focus:border-transparent">
+                            <button type="submit" @click="click" :disabled="form.processing" class="mt-1 ml-2 block w-1/4 font-semibold rounded-md bg-gradient-to-tl from-gray-600 to gray-400
+                                 hover:text-green-400 hover:shadow-lg hover:shadow-green-600 focus:bg-black focus:ring-0">
                                 Добавить
                             </button>
                         </div>
