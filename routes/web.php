@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\CertificateController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\UserQuestionController;
+use App\Http\Controllers\User\IndexController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -16,6 +17,11 @@ Route::get('/', function () {
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
     ]);
+})->name('welcome');
+
+Route::group([''], function () {
+    Route::get('/', [IndexController::class, 'index'])->name('welcome');
+    Route::get('/blog', [IndexController::class, 'blog'])->name('blog');
 });
 
 Route::get('/dashboard', function () {
@@ -62,6 +68,7 @@ Route::prefix('dashboard')->group(function () {
     });
     Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'question'], function () {
         Route::get('/', [QuestionController::class, 'index'])->name('admin.question.index');
+        Route::delete('/delete/{id}', [QuestionController::class, 'destroy'])->name('admin.question.delete');
     });
 });
 

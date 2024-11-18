@@ -5,15 +5,15 @@
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
                     <form @submit.prevent="submit">
                         <div class="flex flex-auto p-6 text-gray-900 dark:text-gray-800">
-                            <input id="name" v-model="form.name" type="text" 
+                            <input id="name" v-model="form.name" type="text"
                                 class="mt-1 block w-full rounded-md bg-gray-200 border-transparent
                                  focus:border-gray-500 focus:text-gray-600 focus:bg-white focus:ring-0
-                                 dark:bg-gray-600 dark:text-gray-200 font-semibold">
-                            <button type="submit" @click="click" :disabled="form.processing" 
+                                 dark:bg-gray-600 dark:text-gray-200 font-semibold focus:shadow-inner focus:shadow-gray-600 ">
+                            <button type="submit" @click="click" :disabled="form.processing"
                                 class="mt-1 ml-2 block w-1/4 rounded-md bg-gray-200 border-transparent
                                  focus:bg-transparent focus:text-white focus:ring-0
                                  hover:shadow-lg hover:shadow-green-400 hover:text-green-500
-                                 dark:bg-gray-600 dark:text-gray-200 font-semibold">
+                                 dark:bg-gray-600 dark:text-gray-200 font-semibold duration-200  ease-in-out ">
                                 Добавить
                             </button>
                         </div>
@@ -25,7 +25,7 @@
                             <tbody>
                                 <tr v-for="(category, index) in categories" :key="category.id" class="bg-white border-b
                                         dark:bg-gray-800 dark:border-gray-700
-                                        hover:bg-gray-50 dark:hover:bg-gray-600">
+                                        hover:bg-gray-50 dark:hover:bg-gray-600 duration-200  ease-in-out ">
 
                                     <td scope="row" class="px-6 py-4 font-medium text-gray-900
                                                          whitespace-nowrap dark:text-white">
@@ -38,8 +38,8 @@
                                     </td>
                                     <td>
                                         <button class="rounded-md w-1/2 h-8 hover:shadow-lg
-                                         hover:shadow-red-500 hover:text-red-500 shadow-red-400  text-black
-                                         font-bold "
+                                         font-bold hover:duration-200 duration-200 ease-in-out hover:shadow-red-500
+                                          hover:text-red-500 hover:shadow-inner  text-black"
                                             @click="deleteCategory(category.id)">DEL</button>
                                     </td>
                                 </tr>

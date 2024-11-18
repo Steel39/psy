@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { defineProps, ref, provide } from 'vue';
+import {useForm} from "@inertiajs/vue3";
 
 const status = ref('Хорошего дня!')
 provide('status', {
@@ -9,6 +10,21 @@ provide('status', {
 const props = defineProps({
     post: Object,
 })
+
+const form = useForm({
+
+})
+const editPost = (id) => {
+    form.get(route('post.edit', { id: id}), {
+        preserveScroll: true
+    })
+}
+const deletePost = (id) => {
+    form.delete(route('post.delete', { id: id}), {
+        preserveScroll: true
+    })
+}
+
 const imagePath = `/storage/${props.post.image}`
 console.log(imagePath)
 </script>
@@ -52,9 +68,20 @@ console.log(imagePath)
                                 <div class="flex  gap-4 flex-wrap">
                                     <div v-for="(tag) in post.tags" :key="tag.id"
                                          class="font-bold py-2 px-4 rounded   opacity-50">
-                                        <span class="text-gray-900 text-2xl p-2 font-bold rounded-md dark:hover:text-white shadow-md shadow-cyan-200 dark:text-gray-200"> {{ tag.name }} </span>
+                                        <span class="text-gray-900 text-2xl p-2 font-bold rounded-md dark:hover:text-white shadow-inner shadow-black dark:text-gray-200"> {{ tag.name }} </span>
                                     </div>
                                 </div>
+                                <div class="flex text-right p-4 justify-between">
+                                    <button class="border border-gray-400 focus:shadow-inner  focus:shadow-black hover:text-black font-sans
+                                     rounded-lg duration-200 p-2" @click="editPost(post.id)">
+                                        Редактировать
+                                    </button>
+                                    <button class="ml-4 border border-gray-400 focus:shadow-inner hover:bg-red-500 hover:text-indigo-300  focus:shadow-black hover:text-black font-sans
+                                     rounded-lg duration-200 p-2" @click="deletePost(post.id)">
+                                        Удалить
+                                    </button>
+                                </div>
+
                             </div>
                         </div>
                     </div>

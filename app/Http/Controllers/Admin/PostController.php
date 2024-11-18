@@ -103,6 +103,6 @@ public function edit(Post $id): Response
     public function destroy(Post $id): RedirectResponse
     {
         $id->delete();
-        return redirect()->back();
+        return redirect()->route('post.index');
     }
 }

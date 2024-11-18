@@ -2,23 +2,23 @@
     <AuthenticatedLayout>
         <div class="py-12">
             <form @submit.prevent="submit">
-                <div class=" mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div class="grid grid-cols-2 gap-2">
                         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
                             <span for="certificate.name" class="p-6 text-gray-900 font-bold dark:text-gray-100">
                                 Название
                             </span>
                             <div class="p-6  dark:text-gray-100">
-                                <input class="form-control w-1/2 rounded-md text-gray-900 bg-yellow-100" type="text"
+                                <input class="form-control w-1/2 rounded-md text-gray-900 bg-yellow-100 duration-300 shadow-inner focus:shadow-black" type="text"
                                        name="name" id="name" v-model="form.name"/>
                             </div>
                         </div>
-                        <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
+                        <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800 ">
                             <span class="p-6 font-bold text-gray-900 dark:text-gray-100">
                                 Описание
                             </span>
                             <div class="p-6 dark:text-gray-100">
-                                <input class="rounded-md w-full text-gray-900 bg-yellow-100" type="text"
+                                <input class="rounded-md w-full text-gray-900 bg-yellow-100 shadow-inner focus:shadow-black duration-200" type="text"
                                        name="description" id="description" v-model="form.description"/>
                             </div>
                         </div>
@@ -28,12 +28,13 @@
                             Изображение
                         </span>
                         <div class="p-6 text-gray-900 dark:text-gray-100 ">
-                            <input type="file" class="form-control" id="image" name="image" @change="onFileChange"
+                            <input type="file" class="form-control border-2 shadow-inner shadow-black border-gray-900
+                                  dark:text-black text-sans bg-yellow-100 rounded-lg" id="image" name="image" @change="onFileChange"
                                    :v-model="form.image">
                             <progress v-if="form.progress" :value="form.progress.percentage" max="100">
                                 {{ form.progress.percentage }}%
                             </progress>
-                            <div v-if="previewUrl" class="mt-4 ">
+                            <div v-if="previewUrl" class="mt-4">
                                 <img class="rounded-md" :src="previewUrl" :alt="'Предпросмотр: ' + form.image.name">
                                 <p class="font-medium text-gray-400">Размер: {{ form.image.size | fileSize }}</p>
                             </div>
@@ -52,9 +53,9 @@
                 </div>
             </form>
 
-            <div class="mx-auto max-w-7xl mt-10 sm:px-6 lg:px-8">
-                <div v-for="certificate in certificates" class=" bg-gray-200 dark:bg-gray-700 mt-5  rounded-lg py-8">
-                    <div class="flex flex-wrap flex-auto">
+            <div class="mx-auto max-w-7xl mt-10 sm:px-6 lg:px-8 ">
+                <div v-for="certificate in certificates" class=" bg-gray-200 dark:bg-gray-700 mt-5  rounded-lg py-6">
+                    <div class="flex flex-wrap ">
                         <div class=" mx-auto ml-6">
                             <h1
                                 class="text-3xl basis-1/4 font-bold text-gray-800 dark:text-gray-400 bg-gray-300 dark:bg-gray-800/40 shadow-lg  rounded-[10px] p-2 mb-2">
@@ -75,7 +76,9 @@
                     <div class="h-10 p-6 order-last justify-end text-right flex-grow">
                         <button class="text-gray-700 bg-gradient-to-br from-gray-400 to-gray-200 shadow-lg
                                         hover:shadow-red-500
-                                       p-2 font-medium rounded-md border-gray-400 hover:text-red-700 duration-200" @click="deleteCertificate(certificate.id)">
+                                       p-2 font-medium rounded-md border-gray-400 hover:text-red-700 duration-200"
+                                @click="deleteCertificate(certificate.id)"
+                                :disabled="form.processing">
                             Удалить сертификат
                         </button>
                     </div>

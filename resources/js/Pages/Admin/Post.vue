@@ -43,14 +43,14 @@
                                 </td>
                                 <td class="px-6 py-4 font-medium text-gray-900
                                                          whitespace-nowrap dark:text-white">
-                                    <button @click="showPost(post.id)" class="text-gray-500 dark:text-gray-300  hover:text-green-500 hover:shadow-lg
-                                        hover:shadow-green-400 p-2 rounded-md duration-200">
+                                    <button @click="showPost(post.id)" class="text-gray-500 dark:text-gray-300  hover:text-green-500 hover:shadow-md
+                                        hover:shadow-green-400 p-2 rounded duration-200">
                                         Show
                                     </button>
-                                    <button @click="editPost(post.id)" class="ml-10 text-gray-500 duration-200 dark:text-gray-300 p-2 rounded-md hover:shadow-lg hover:shadow-blue-400 hover:text-blue-500">
+                                    <button @click="editPost(post.id)" class="ml-10 text-gray-500 duration-200 dark:text-gray-300 p-2 rounded hover:shadow-md hover:shadow-blue-400 hover:text-blue-500">
                                         Edit
                                     </button>
-                                    <button @click="deletePost(post.id)" class="ml-10 duration-200 text-gray-500 dark:text-gray-300  p-2 rounded-md hover:shadow-lg hover:shadow-red-400 hover:text-red-500">
+                                    <button @click="deletePost(post.id)" class="ml-10 duration-200 text-gray-500 dark:text-gray-300  p-2 rounded hover:shadow-md hover:shadow-red-400 hover:text-red-500">
                                         Del
                                     </button>
                                 </td>
