@@ -26,7 +26,7 @@ const deletePost = (id) => {
 }
 
 const imagePath = `/storage/${props.post.image}`
-console.log(imagePath)
+
 </script>
 <template>
     <AuthenticatedLayout>

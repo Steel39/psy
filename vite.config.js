@@ -18,6 +18,9 @@ export default defineConfig({
                     base: null,
                     includeAbsolute: false,
                 },
+                compilerOptions: {
+                    isCustomElement: (tag) => tag.startsWith('component_') || tag === 'component_hide',
+                  },
             },
         }),
     ],

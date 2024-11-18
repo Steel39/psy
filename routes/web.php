@@ -22,6 +22,13 @@ Route::get('/', function () {
 Route::group([''], function () {
     Route::get('/', [IndexController::class, 'index'])->name('welcome');
     Route::get('/blog', [IndexController::class, 'blog'])->name('blog');
+    Route::get('/contact', [IndexController::class, 'contact'])->name('contact');
+    Route::get('/about', [IndexController::class, 'about'])->name('about');
+    Route::get('/answer', [IndexController::class, 'answer'])->name('answer');
+    Route::get('/feedback', [IndexController::class, 'feedback'])->name('feedback');
+    Route::get('/services', [IndexController::class, 'service'])->name('service');
+    Route::get('/certificates', [IndexController::class, 'certificate'])->name('certificate');
+    Route::get('/post/{id}', [IndexController::class, 'post'])->name('post');
 });
 
 Route::get('/dashboard', function () {

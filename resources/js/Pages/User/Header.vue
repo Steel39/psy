@@ -6,11 +6,12 @@
             </div>
             <nav class="space-x-4 text-right font-sans  text-stone-500  dark:text-stone-200">
                 <Link :href="route('blog')" class=" hover:text-black dark:hover:text-white">Блог</Link>
-                <Link href="/services" class=" hover:text-black dark:hover:text-white">Услуги</Link>
-                <Link href="/contact" class=" hover:text-black dark:hover:text-white">Контакты</Link>
-                <Link href="/certificates" class=" hover:text-black dark:hover:text-white">Сертификаты</Link>
-                <Link href="/answers" class=" hover:text-black dark:hover:text-white">Ответы</Link>
-                <Link href="/feedbacks" class=" hover:text-black dark:hover:text-white">Отзывы</Link>
+                <Link :href="route('service')" class=" hover:text-black dark:hover:text-white">Услуги</Link>
+                <Link :href="route('contact')" class=" hover:text-black dark:hover:text-white">Контакты</Link>
+                <Link :href="route('certificate')" class=" hover:text-black dark:hover:text-white">Сертификаты</Link>
+                <Link :href="route('answer')" class=" hover:text-black dark:hover:text-white">Ответы</Link>
+                <Link :href="route('feedback')" class=" hover:text-black dark:hover:text-white">Отзывы</Link>
+                <Link :href="route('about')" class=" hover:text-black dark:hover:text-white">Обо мне</Link>
             </nav>
         </div>
     </header>

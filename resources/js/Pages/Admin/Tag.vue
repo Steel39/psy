@@ -5,11 +5,11 @@
                 <div class="overflow-hidden bg-white shadow-inner shadow-black sm:rounded-lg dark:bg-gray-800">
                     <form @submit.prevent="submit">
                         <div class="flex flex-auto p-6 text-gray-900 dark:text-gray-800">
-                            <input id="name" v-model="form.name" type="text" class="mt-1 block w-full shadow-inner rounded-md bg-gray-200 border-none
-                                 focus:border-gray-500 focus:bg-white focus:shadow-inner focus:shadow-gray-600  focus:ring-0
+                            <input id="name" v-model="form.name" type="text" class="mt-1 block w-full shadow-inner rounded-md bg-gray-400 border-none
+                                 focus:border-gray-500 focus:bg-amber-200 focus:shadow-inner focus:shadow-gray-600  focus:ring-0
                                  focus:border-transparent">
                             <button type="submit" @click="click" :disabled="form.processing" class="mt-1 ml-2 block w-1/4 font-semibold rounded-md bg-gradient-to-tl from-gray-300 to gray-500
-                                 hover:text-green-500 hover:shadow-lg hover:shadow-green-200 focus:shadow-inner focus:shadow-black duration-200 ease-in-out focus:ring-0">
+                                 hover:text-green-500 hover:shadow hover:shadow-gray-200 hover:text-stone-200 focus:shadow-inner focus:shadow-black duration-200 ease-in-out focus:ring-0">
                                 Добавить
                             </button>
                         </div>
