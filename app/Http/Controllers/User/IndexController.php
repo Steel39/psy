@@ -18,7 +18,7 @@ class IndexController extends Controller
     public function blog(): Response
     {
         $categories = Category::all()->toArray();
-        $posts = Post::all()->toArray();
+        $posts = Post::latest()->take(10)->get()->toArray();
         return Inertia::render('User/Blog',
         [
             'posts' => $posts,
@@ -26,6 +26,7 @@ class IndexController extends Controller
 
         ]);
     }
+
 
     public function certificate(): Response
     {

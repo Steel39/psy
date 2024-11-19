@@ -1,7 +1,7 @@
 <template>
     <GuestLayout>
-        <div class="">
-            <div class="mx-auto sm:px-6 lg:px-8">
+        <div class="py-4">
+            <div class="mx-4">
                 <label for="post" class="text-2xl  font-bold text-gray-700/90
                                          dark:text-stone-200/80 shadow-inner text-left p-2">
                     Категории
@@ -12,14 +12,15 @@
                         <p class="p-2">{{ category.name }}</p>
                     </div>
                 </div>
-                <div class="mt-5 lg:grid lg:grid-cols-2 sm:grid sm:grid-cols-1 gap-4 ">
+                <transition :duration="500" name="slide-fade" mode="out-in">
+                <div v-if="!selectedPost" class="mt-5 lg:grid lg:grid-cols-2 sm:grid sm:grid-cols-1 gap-4 ">
                     <div v-for="post in posts"
                         class="text-left bg-stone-300/90 dark:text-white dark:bg-gray-600/70 rounded-md shadow-md duration-200  hover:shadow-black">
 
                         <h1
                         class="text-2xl  font-bold text-gray-700/70 dark:text-gray-200/90 text-left mx-8 p-2  ">
                         {{ post.title }}</h1>
-                        <button @click="showPost(post.id)">
+                        <button @click="showPost(post)">
                         <div class="mb-4">
                             <div class="flex flex-grow">
                                 <img :src="`/storage/${post.image}`" alt="Post Image" class="rounded-md mx-10 hover:shadow-md duration-200
@@ -30,6 +31,8 @@
                     </button>
                     </div>
                 </div>
+                <PostComponent v-else :post="selectedPost" @back="selectedPost = null" />
+                </transition>
             </div>
         </div>
     </GuestLayout>
@@ -38,30 +41,44 @@
 <script setup>
 import GuestLayout from "@/Layouts/GuestLayout.vue";
 import { Link, useForm } from "@inertiajs/vue3";
-
+import { ref } from "vue";
+import PostComponent from "@/Components/PostComponent.vue";
 const props = defineProps({
     posts: Object,
     categories: Object,
 })
 
+const selectedPost = ref(null)
+const postCategory = (category_id) => {
+
+}
+
 const form = useForm({
 })
 
-const showPost = (id) => {
-    form.get(route('post', { id: id }), {
 
-    })
+
+const showPost = (post) => {
+    selectedPost.value = post;
+    scrollToTop();
 }
+
+const scrollToTop = () => {
+  window.scrollTo({ top: 300, behavior: 'smooth'});
+};
 
 </script>
 <style>
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 0.5s;
+.slide-fade-enter-active, .slide-fade-leave-active {
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+.slide-fade-enter, .slide-fade-leave-to /* .slide-fade-leave-active в <2.1.8 */ {
+  opacity: 0;
+  transform: translateZ(-100px) scale(0.8); /* Элемент будет уменьшаться и перемещаться к пользователю */
 }
 
-.fade-enter-from,
-.fade-enter-to {
-    opacity: 0;
+.slide-fade-leave {
+  opacity: 0;
+  transform: translateZ(100px) scale(1.2); /* Элемент будет увеличиваться и уходить */
 }
 </style>
