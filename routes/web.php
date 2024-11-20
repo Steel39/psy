@@ -29,6 +29,7 @@ Route::group([''], function () {
     Route::get('/services', [IndexController::class, 'service'])->name('service');
     Route::get('/certificates', [IndexController::class, 'certificate'])->name('certificate');
     Route::get('/post/{id}', [IndexController::class, 'post'])->name('post');
+    Route::get('/posts_of_category/{category_name}/{id}', [IndexController::class, 'categoryPost'])->name('category.posts');
 });
 
 Route::get('/dashboard', function () {

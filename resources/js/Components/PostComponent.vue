@@ -38,20 +38,29 @@
             <div class="bg-gray-200 w-full text-right dark:bg-gray-700 rounded-lg mt-4">
                 <button
                     class="text-gray-800/80 dark:text-stone-200 p-2 mx-2 my-2 rounded-md hover:shadow-black shadow-md duration-300 "
-                    @click="$emit('back')">Back to Posts</button>
+                    @click="handleClosePost">Back to Posts</button>
             </div>
         </div>
     </div>
 </template>
 <script setup>
 
-import { defineProps, ref } from 'vue';
+import { defineProps, ref, onMounted } from 'vue';
 
 
+const emit = defineEmits (['back'])
 const props = defineProps({
     post: Object,
+    scrollPosition: Number
 })
 
+const src = ref(props.scrollPosition)
+function handleClosePost() {
+   
+    emit('back', props.scrollPosition);
+}
+
 const imagePath = `/storage/${props.post.image}`
+
 
 </script>

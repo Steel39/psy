@@ -19,28 +19,47 @@ class IndexController extends Controller
     {
         $categories = Category::all()->toArray();
         $posts = Post::latest()->take(10)->get()->toArray();
-        return Inertia::render('User/Blog',
-        [
-            'posts' => $posts,
-            'categories' => $categories,
+        return Inertia::render(
+            'User/Blog',
+            [
+                'posts' => $posts,
+                'categories' => $categories,
 
-        ]);
+            ]
+        );
     }
 
+    public function categoryPost($categoryName, $categoryId): Response
+    {
+
+        //$posts = Post::where('category_id', $categoryId)->get()->toArray();
+        $posts = Post::all()->toArray();
+
+        $categories = Category::all()->toArray();
+        return Inertia::render(
+            'User/Blog',
+            [
+                'posts' => fn() => $posts,
+                'categories' => $categories,
+            ]
+        );
+    }
 
     public function certificate(): Response
     {
         $data = Certificate::all()->toArray();
-        return Inertia::render('User/Certificate',
-        [
-            'certificates' => $data,
-        ]);
+        return Inertia::render(
+            'User/Certificate',
+            [
+                'certificates' => $data,
+            ]
+        );
     }
 
     public function post(Post $id): Response
     {
         $post = Post::find($id->id)->toArray();
-        return Inertia::render('User/Post', ['post'=> $post]);
+        return Inertia::render('User/Post', ['post' => $post]);
     }
 
     public function contact(): Response

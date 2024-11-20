@@ -9,7 +9,9 @@
                 <div class="flex flex-wrap gap-4 mt-4">
                     <div v-for="category in categories"
                         class="text-gray-800/80 dark:text-stone-200 rounded-md hover:shadow-black shadow-md duration-300 ">
-                        <p class="p-2">{{ category.name }}</p>
+                        <button @click="categoryPosts(category)" :key="category.id">
+                            <p class="p-2">{{ category.name }}</p>
+                        </button>
                     </div>
                 </div>
                 <transition :duration="500" name="slide-fade" mode="out-in">
@@ -31,7 +33,7 @@
                     </button>
                     </div>
                 </div>
-                <PostComponent v-else :post="selectedPost" @back="selectedPost = null" />
+                <PostComponent v-else :post="selectedPost" :scrollPosition="scrollPosition" @back="handleBack" />
                 </transition>
             </div>
         </div>
@@ -41,33 +43,41 @@
 <script setup>
 import GuestLayout from "@/Layouts/GuestLayout.vue";
 import { Link, useForm } from "@inertiajs/vue3";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import PostComponent from "@/Components/PostComponent.vue";
 const props = defineProps({
     posts: Object,
     categories: Object,
 })
-
+const form = useForm({})
 const selectedPost = ref(null)
-const postCategory = (category_id) => {
-
+const scrollPosition = ref(0)
+const categoryPosts = (category) => {
+    form.get(route('category.posts', {
+        category_name: category.name,
+        id: category.id
+    }), {
+        preserveScroll:true,
+    })
 }
-
-const form = useForm({
-})
-
-
-
 const showPost = (post) => {
+    scrollPosition.value = window.scrollY;
+    console.log(scrollPosition.value + 'send')
     selectedPost.value = post;
-    scrollToTop();
+    window.scrollTo({ top: 300, behavior: 'smooth'});
 }
 
-const scrollToTop = () => {
-  window.scrollTo({ top: 300, behavior: 'smooth'});
-};
+
+const handleBack = () => {
+    window.scrollTo({ top: scrollPosition.value , behavior: 'smooth'});
+    console.log(window.scrollY + 'end')
+    selectedPost.value = null;
+}
 
 </script>
+
+
+
 <style>
 .slide-fade-enter-active, .slide-fade-leave-active {
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
