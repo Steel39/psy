@@ -9,7 +9,7 @@
                 <div class="flex flex-wrap gap-4 mt-4">
                     <div v-for="category in categories"
                         class="text-gray-800/80 dark:text-stone-200 rounded-md hover:shadow-black shadow-md duration-300 ">
-                        <button @click="categoryPosts(category)" :key="category.id">
+                        <button @click="categoryPosts(category)">
                             <p class="p-2">{{ category.name }}</p>
                         </button>
                     </div>
@@ -45,6 +45,8 @@ import GuestLayout from "@/Layouts/GuestLayout.vue";
 import { Link, useForm } from "@inertiajs/vue3";
 import { ref, onMounted } from "vue";
 import PostComponent from "@/Components/PostComponent.vue";
+import transliterate from "@/transliterate";
+
 const props = defineProps({
     posts: Object,
     categories: Object,
@@ -54,7 +56,7 @@ const selectedPost = ref(null)
 const scrollPosition = ref(0)
 const categoryPosts = (category) => {
     form.get(route('category.posts', {
-        category_name: category.name,
+        category_name: transliterate(category.name),
         id: category.id
     }), {
         preserveScroll:true,
@@ -69,9 +71,9 @@ const showPost = (post) => {
 
 
 const handleBack = () => {
-    window.scrollTo({ top: scrollPosition.value , behavior: 'smooth'});
     console.log(window.scrollY + 'end')
     selectedPost.value = null;
+    window.scrollTo({ top: scrollPosition.value , behavior: 'smooth'});
 }
 
 </script>

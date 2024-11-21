@@ -12,6 +12,7 @@ class IndexController extends Controller
 {
     public function index(): Response
     {
+
         return Inertia::render('Welcome');
     }
 
@@ -32,8 +33,8 @@ class IndexController extends Controller
     public function categoryPost($categoryName, $categoryId): Response
     {
 
-        //$posts = Post::where('category_id', $categoryId)->get()->toArray();
-        $posts = Post::all()->toArray();
+        $posts = Post::where('category_id', $categoryId)->get()->toArray();
+
 
         $categories = Category::all()->toArray();
         return Inertia::render(

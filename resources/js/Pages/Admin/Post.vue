@@ -69,12 +69,13 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Link, useForm } from "@inertiajs/vue3";
 import { provide, ref } from "vue";
-
-const form = useForm({})
 const status = ref('Хорошего дня!')
 provide('status', {
     status
 })
+
+const form = useForm({})
+
 
 const props = defineProps ({
     posts: Object

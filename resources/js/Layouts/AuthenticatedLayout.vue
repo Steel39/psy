@@ -7,6 +7,7 @@ import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
 import StatusWindow from "@/Components/StatusWindow.vue";
+import HeaderForPages from '@/Components/HeaderForPages.vue';
 const showingNavigationDropdown = ref(false);
 
 </script>
@@ -49,6 +50,10 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('admin.question.index')"
                                     :active="route().current('admin.question.index')">
                                     Вопросы
+                                </NavLink>
+                                <NavLink :href="route('admin.user.pages')"
+                                    :active="route().current('admin.user.pages')">
+                                    Страницы
                                 </NavLink>
 
                             </div>
@@ -151,9 +156,11 @@ const showingNavigationDropdown = ref(false);
 
             <!-- Page Heading -->
             <header class="bg-white shadow dark:bg-gray-800" v-if="$slots.header">
+
                 <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                     <slot name="header" />
                 </div>
+
             </header>
 
             <!-- Page Content -->

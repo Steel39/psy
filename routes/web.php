@@ -5,6 +5,12 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\CertificateController;
+use App\Http\Controllers\Admin\Pages\MainPageController;
+use App\Http\Controllers\Admin\Pages\ServicePageController;
+use App\Http\Controllers\Admin\Pages\ContactPageController;
+use App\Http\Controllers\Admin\Pages\FeedbackPageController;
+use App\Http\Controllers\Admin\Pages\AboutPageController;
+use App\Http\Controllers\Admin\Pages\AnswerPageController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\UserQuestionController;
 use App\Http\Controllers\User\IndexController;
@@ -78,6 +84,34 @@ Route::prefix('dashboard')->group(function () {
         Route::get('/', [QuestionController::class, 'index'])->name('admin.question.index');
         Route::delete('/delete/{id}', [QuestionController::class, 'destroy'])->name('admin.question.delete');
     });
+    Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user-page'], function () {
+        Route::get('/pages', [MainPageController::class, 'index' ])->name('admin.user.pages');
+        Route::group(['prefix' => 'services'], function() {
+            Route::get('/', [ServicePageController::class, 'index'])->name('admin.page.service');
+            Route::post('/store', [ServicePageController::class, 'store'])->name('admin.page.service.store');
+            Route::put('/update', [ServicePageController::class, 'update'])->name('admin.page.service.update');
+        });
+        Route::group(['prefix' => 'contact'], function() {
+            Route::get('/', [ContactPageController::class, 'index'])->name('admin.page.contact');
+            Route::post('/store', [ContactPageController::class, 'store'])->name('admin.page.contact.store');
+            Route::put('/update', [ContactPageController::class, 'update'])->name('admin.page.contact.update');
+        });
+        Route::group(['prefix' => 'about'], function() {
+            Route::get('/', [AboutPageController::class, 'index'])->name('admin.page.about');
+            Route::post('/store', [AboutPageController::class, 'store'])->name('admin.page.about.store');
+            Route::put('/update', [AboutPageController::class, 'update'])->name('admin.page.about.update');
+        });
+        Route::group(['prefix' => 'feedback'], function() {
+            Route::get('/', [FeedbackPageController::class, 'index'])->name('admin.page.feedback');
+            Route::post('/store', [FeedbackPageController::class, 'store'])->name('admin.page.feedback.store');
+            Route::put('/update', [FeedbackPageController::class, 'update'])->name('admin.page.feedback.update');
+        });
+        Route::group(['prefix' => 'answer'], function() {
+            Route::get('/', [AnswerPageController::class, 'index'])->name('admin.page.answer');
+            Route::post('/store', [AnswerPageController::class, 'store'])->name('admin.page.answer.store');
+            Route::put('/update', [AnswerPageController::class, 'update'])->name('admin.page.answer.update');
+        });
+    });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
