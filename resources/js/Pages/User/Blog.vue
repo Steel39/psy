@@ -9,31 +9,35 @@
                 <div class="flex flex-wrap gap-4 mt-4">
                     <div v-for="category in categories"
                         class="text-gray-800/80 dark:text-stone-200 rounded-md hover:shadow-black shadow-md duration-300 ">
-                        <button @click="categoryPosts(category)">
+                        <button @click="getPosts(category.id)">
                             <p class="p-2">{{ category.name }}</p>
                         </button>
                     </div>
                 </div>
                 <transition :duration="500" name="slide-fade" mode="out-in">
-                <div v-if="!selectedPost" class="mt-5 lg:grid lg:grid-cols-2 sm:grid sm:grid-cols-1 gap-4 ">
-                    <div v-for="post in posts"
-                        class="text-left bg-stone-300/90 dark:text-white dark:bg-gray-600/70 rounded-md shadow-md duration-200  hover:shadow-black">
-
-                        <h1
-                        class="text-2xl  font-bold text-gray-700/70 dark:text-gray-200/90 text-left mx-8 p-2  ">
-                        {{ post.title }}</h1>
-                        <button @click="showPost(post)">
-                        <div class="mb-4">
-                            <div class="flex flex-grow">
-                                <img :src="`/storage/${post.image}`" alt="Post Image" class="rounded-md mx-10 hover:shadow-md duration-200
+                    <div v-if="!selectedPost"
+                        class="mt-5 lg:grid lg:grid-cols-2 sm:grid sm:grid-cols-1 gap-4 easy-in-out duration-300">
+                        <div v-for="post in selectedPosts" class="text-left bg-stone-300/90 dark:text-white dark:bg-gray-600/70
+                                rounded-md shadow-md duration-200  hover:shadow-black">
+                            <component_hide>
+                                <h1
+                                    class="text-2xl  font-bold text-gray-700/70 dark:text-gray-200/90 text-left mx-8 p-2">
+                                    {{ post.title }}</h1>
+                                <button @click="showPost(post)">
+                                    <div class="mb-4">
+                                        <div class="flex flex-grow">
+                                            <img :src="`/storage/${post.image}`" alt="Post Image" class="rounded-md mx-10 hover:shadow-md duration-200
                                 hover:shadow-black w-72 max-w-full h-auto sepia  backdrop-blur-md">
-                                <p class="text-gray-600 w-1/2 dark:text-gray-200/90">{{ post.description }}</p>
-                            </div>
+                                            <p class="text-gray-600 w-1/2 dark:text-gray-200/90">{{ post.description }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </button>
+                            </component_hide>
+
                         </div>
-                    </button>
                     </div>
-                </div>
-                <PostComponent v-else :post="selectedPost" :scrollPosition="scrollPosition" @back="handleBack" />
+                    <PostComponent v-else :post="selectedPost" :scrollPosition="scrollPosition" @back="handleBack" />
                 </transition>
             </div>
         </div>
@@ -51,17 +55,17 @@ const props = defineProps({
     posts: Object,
     categories: Object,
 })
-const form = useForm({})
+
+const selectedPosts = ref(props.posts)
+
+const getPosts = (id) => {
+    selectedPosts.value = props.posts.filter(post => post.category_id === id)
+}
+
+
 const selectedPost = ref(null)
 const scrollPosition = ref(0)
-const categoryPosts = (category) => {
-    form.get(route('category.posts', {
-        category_name: transliterate(category.name),
-        id: category.id
-    }), {
-        preserveScroll:true,
-    })
-}
+
 const showPost = (post) => {
     scrollPosition.value = window.scrollY;
     console.log(scrollPosition.value + 'send')

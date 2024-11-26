@@ -99,7 +99,8 @@ Route::prefix('dashboard')->group(function () {
         Route::group(['prefix' => 'about'], function() {
             Route::get('/', [AboutPageController::class, 'index'])->name('admin.page.about');
             Route::post('/store', [AboutPageController::class, 'store'])->name('admin.page.about.store');
-            Route::put('/update', [AboutPageController::class, 'update'])->name('admin.page.about.update');
+            Route::put('/update/{id}', [AboutPageController::class, 'update'])->name('admin.page.about.update');
+            Route::delete('/update/{id}', [AboutPageController::class, 'destroy'])->name('admin.page.about.delete');
         });
         Route::group(['prefix' => 'feedback'], function() {
             Route::get('/', [FeedbackPageController::class, 'index'])->name('admin.page.feedback');

@@ -4,7 +4,7 @@ import { Link } from '@inertiajs/vue3';
 import Header from "@/Pages/User/Header.vue";
 </script>
 
-<template class="w-full">
+<template class="w-full ">
     <Header />
     <div class="flex  flex-wrap mx-auto  w-full bg-gray-100 pt-6 sm:justify-center sm:pt-0 dark:bg-gray-900">
         <div
@@ -12,7 +12,7 @@ import Header from "@/Pages/User/Header.vue";
             <div class="py-4">
                 <div class="mx-auto sm:px-6 lg:px-4">
                     <div class="flex flex-col">
-                        <!-- Заголовок визитки психолога -->
+
                         <div class="bg-stone-600/20 dark:bg-gray-700 shadow-inner shadow-black rounded-lg py-4">
                             <component_hide>
                                 <slot />
@@ -37,6 +37,6 @@ import Header from "@/Pages/User/Header.vue";
 
 component_hide {
     opacity: 0;
-    animation: ani 0.5s forwards ease-in;
+    animation: ani 0.5s forwards ease-in-out;
 }
 </style>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Certificate;
 use App\Models\Post;
 use App\Models\Category;
+use App\Models\Pages\About;
 use Inertia\Inertia;
 use Inertia\Response;
 class IndexController extends Controller
@@ -19,7 +20,7 @@ class IndexController extends Controller
     public function blog(): Response
     {
         $categories = Category::all()->toArray();
-        $posts = Post::latest()->take(10)->get()->toArray();
+        $posts = Post::all()->toArray();
         return Inertia::render(
             'User/Blog',
             [
@@ -70,7 +71,10 @@ class IndexController extends Controller
 
     public function about(): Response
     {
-        return Inertia::render('User/About');
+        $abouts = About::all()->toArray();
+        return Inertia::render('User/About', [
+            'abouts' => $abouts,
+        ]);
     }
     public function answer(): Response
     {
