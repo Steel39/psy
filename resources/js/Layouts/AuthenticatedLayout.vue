@@ -51,8 +51,8 @@ const showingNavigationDropdown = ref(false);
                                     :active="route().current('admin.question.index')">
                                     Вопросы
                                 </NavLink>
-                                <NavLink :href="route('admin.user.pages')"
-                                    :active="route().current('admin.user.pages')">
+                                <NavLink :href="route('admin.page.main')"
+                                    :active="route().current('admin.page.main')">
                                     Страницы
                                 </NavLink>
 

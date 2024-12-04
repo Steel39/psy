@@ -7,14 +7,17 @@ use App\Models\Certificate;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\Pages\About;
+use App\Models\Pages\MainPage;
 use Inertia\Inertia;
 use Inertia\Response;
 class IndexController extends Controller
 {
     public function index(): Response
     {
-
-        return Inertia::render('Welcome');
+        $data = MainPage::all();
+        return Inertia::render('Welcome', [
+            'mainData' => $data,
+        ]);
     }
 
     public function blog(): Response

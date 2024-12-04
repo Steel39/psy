@@ -4,10 +4,10 @@
             <div>
                 <h1
                     class="text-4xl font-bold text-gray-800 dark:text-gray-400 bg-gray-300 dark:bg-gray-800/40 shadow-lg rounded-[10px] p-2 mb-4">
-                    {{ psychologistName }}
+                    {{ props.mainData.header }}
                 </h1>
                 <p class="text-lg font-semibold text-gray-600 dark:text-gray-400 mb-2">{{
-                    psychologistTagline
+
                 }}</p>
             </div>
             <img :src="imagePath" alt="image" class="rounded-md shadow-md size-80">
@@ -47,7 +47,7 @@
         <!-- Краткая информация о психологе -->
         <div class="bg-gray-200 dark:bg-gray-700 rounded-lg mx-4 mt-4">
             <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-400">О себе</h2>
-            <p class="mt-2 text-gray-600 dark:text-gray-300">{{ aboutMe }}</p>
+            <p class="mt-2 text-gray-600 dark:text-gray-300">{{  }}</p>
         </div>
 
         <!-- Кнопка записи на прием -->
@@ -61,30 +61,16 @@
 
 </template>
 
-<script>
+<script setup>
 import GuestLayout from "@/Layouts/GuestLayout.vue";
+import { ref } from "vue";
 
-export default {
-    components: { GuestLayout },
-    data() {
-        return {
-            psychologistName: 'Любой заголовок, Имя Фамилию',
-            psychologistTagline: '  «Психотерапия» в переводе с латинского — «лечение души». Тем, кто никогда не обращался за помощью к психотерапевту, кажется, что его работа сродни волшебству: моментально избавляет от всех проблем. К сожалению, чудесных одномоментных исцелений не бывает. В то же время при определенных условиях помощь психотерапевта может оказаться очень эффективной.\n' +
-                '\n' +
-                'Я — психотерапевт и постараюсь вам помочь в сложных жизненных ситуациях. Но важно понять, что путь к внутреннему равновесию долог. И этот путь, порой извилистый и нелегкий, потребует кропотливой работы как с моей, так и с вашей стороны.\n' +
-                '\n' +
-                'Прежде чем обратиться за помощью, задайте себе вопрос: готовы ли вы эту помощь принять, готовы ли взять на себя ответственность за свою судьбу и личное счастье? Увы, но кому-то действительно легче лелеять свои неудачи и смиряться под ударами судьбы.\n' +
-                '\n' +
-                'Если вы сомневаетесь, нужна ли вам психотерапевтическая помощь, посмотрите мой сайт. Здесь собраны основные ситуации, с которыми ко мне обращаются люди. Быть может, вы узнаете ответы на свои вопросы и найдете здесь источник сил, чтобы справиться с проблемами самостоятельно.\n' +
-                '\n' +
-                'Если же вопросы остались без ответа, вы может обратиться ко мне, чтобы найти ответы вместе.',
-            phoneNumber: '+7 (123) 456-78-90',
-            email: 'psychologist@example.com',
-            aboutMe: 'Добро пожаловать! Я профессиональный психолог, специализируюсь на помощи людям в трудные времена.',
-            imagePath: 'https://via.placeholder.com/800',
-        };
-    },
-};
+const props = defineProps({
+    mainData: Object,
+})
+console.log(props.mainData)
+
+const imagePath = ref(`/storage/${props.mainData.image}`)
 
 </script>
 <style></style>

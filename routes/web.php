@@ -85,32 +85,39 @@ Route::prefix('dashboard')->group(function () {
         Route::delete('/delete/{id}', [QuestionController::class, 'destroy'])->name('admin.question.delete');
     });
     Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user-page'], function () {
-        Route::get('/pages', [MainPageController::class, 'index' ])->name('admin.user.pages');
-        Route::group(['prefix' => 'services'], function() {
+        Route::group(['prefix' => 'main'], function () {
+            Route::get('/', [MainPageController::class, 'index'])->name('admin.page.main');
+            Route::post('/store', [MainPageController::class, 'store'])->name('admin.page.main.store');
+            Route::put('/update/{id}', [MainPageController::class, 'update'])->name('admin.page.main.update');
+            Route::delete('/delete/{id}', [MainPageController::class, 'destroy'])->name('admin.page.main.destroy');
+        });
+        Route::group(['prefix' => 'services'], function () {
             Route::get('/', [ServicePageController::class, 'index'])->name('admin.page.service');
             Route::post('/store', [ServicePageController::class, 'store'])->name('admin.page.service.store');
             Route::put('/update', [ServicePageController::class, 'update'])->name('admin.page.service.update');
+            Route::delete('/delete/{id}', [ServicePageController::class, 'destroy'])->name('admin.page.service.delete');
         });
-        Route::group(['prefix' => 'contact'], function() {
+        Route::group(['prefix' => 'contact'], function () {
             Route::get('/', [ContactPageController::class, 'index'])->name('admin.page.contact');
             Route::post('/store', [ContactPageController::class, 'store'])->name('admin.page.contact.store');
             Route::put('/update', [ContactPageController::class, 'update'])->name('admin.page.contact.update');
         });
-        Route::group(['prefix' => 'about'], function() {
+        Route::group(['prefix' => 'about'], function () {
             Route::get('/', [AboutPageController::class, 'index'])->name('admin.page.about');
             Route::post('/store', [AboutPageController::class, 'store'])->name('admin.page.about.store');
             Route::put('/update/{id}', [AboutPageController::class, 'update'])->name('admin.page.about.update');
             Route::delete('/update/{id}', [AboutPageController::class, 'destroy'])->name('admin.page.about.delete');
         });
-        Route::group(['prefix' => 'feedback'], function() {
+        Route::group(['prefix' => 'feedback'], function () {
             Route::get('/', [FeedbackPageController::class, 'index'])->name('admin.page.feedback');
             Route::post('/store', [FeedbackPageController::class, 'store'])->name('admin.page.feedback.store');
             Route::put('/update', [FeedbackPageController::class, 'update'])->name('admin.page.feedback.update');
         });
-        Route::group(['prefix' => 'answer'], function() {
+        Route::group(['prefix' => 'answer'], function () {
             Route::get('/', [AnswerPageController::class, 'index'])->name('admin.page.answer');
             Route::post('/store', [AnswerPageController::class, 'store'])->name('admin.page.answer.store');
             Route::put('/update', [AnswerPageController::class, 'update'])->name('admin.page.answer.update');
+            Route::put('/delete/{id}', [AnswerPageController::class, 'destroy'])->name('admin.page.answer.delete');
         });
     });
 });

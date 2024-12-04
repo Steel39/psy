@@ -13,7 +13,7 @@
                                        name="name" id="name" v-model="form.name"/>
                             </div>
                         </div>
-                        <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800 ">
+                        <div class="bg-white shadow-sm sm:rounded-lg dark:bg-gray-800 ">
                             <span class="p-6 font-bold text-gray-900 dark:text-gray-100">
                                 Описание
                             </span>
@@ -55,17 +55,13 @@
 
             <div class="mx-auto max-w-7xl mt-10 sm:px-6 lg:px-8 ">
                 <div v-for="certificate in certificates" class=" bg-gray-200 dark:bg-gray-700 mt-5  rounded-lg py-6">
-                    <div class="flex flex-wrap ">
+                    <div class="flex flex-col justify-center">
                         <div class=" mx-auto ml-6">
                             <h1
                                 class="text-3xl basis-1/4 font-bold text-gray-800 dark:text-gray-400 bg-gray-300 dark:bg-gray-800/40 shadow-lg  rounded-[10px] p-2 mb-2">
                                 {{ certificate.name }}</h1>
                         </div>
-                        <div class="container p-2 w-4/5 mx-auto md:items-center bg-gradient-to-br from-zinc-200 shadow-md to-gray-400 px-4
-                                dark:bg-gradient-to-br dark:from-gray-600 dark:to-zinc-600 rounded-xl ">
-                            <h4 class="font-semibold text-gray-800 text-right  dark:text-gray-300 mb-2">
-                                {{ certificate.description }}</h4>
-                        </div>
+
                         <div class="bg-gray-200 basis-3/4 justify-center  dark:bg-gray-700  rounded-lg  mt-4 py-8">
                             <div class="ml-6">
                                 <img :src="`/storage/${certificate.image}`" alt="certificate"
@@ -73,6 +69,11 @@
                             </div>
                         </div>
                     </div>
+                    <div class="p-2  mx-5 md:items-center bg-gradient-to-br from-zinc-200 shadow-md to-gray-400
+                                dark:bg-gradient-to-br dark:from-gray-600 dark:to-zinc-600 rounded-xl ">
+                            <h4 class="font-semibold text-gray-800 text-right  dark:text-gray-300 mb-2">
+                                {{ certificate.description }}</h4>
+                        </div>
                     <div class="h-10 p-6 order-last justify-end text-right flex-grow">
                         <button class="text-gray-700 bg-gradient-to-br from-gray-400 to-gray-200 shadow-lg
                                         hover:shadow-red-500
