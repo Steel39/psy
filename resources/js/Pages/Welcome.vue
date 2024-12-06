@@ -1,76 +1,94 @@
-<template class="">
-    <GuestLayout class="">
-        <div class="flex flex-grow gap-6  p-4">
+<template >
+    <GuestLayout>
+        <div v-for="data in mainData" class="flex flex-col gap-4 p-4 sm:flex-row">
             <div>
-                <h1
-                    class="text-4xl font-bold text-gray-800 dark:text-gray-400 bg-gray-300 dark:bg-gray-800/40 shadow-lg rounded-[10px] p-2 mb-4">
-                    {{ props.mainData.header }}
+                <h1 class="text-4xl font-bold text-gray-800 dark:text-gray-300 drop-shadow-xl rounded-[10px] p-2 mb-4">
+                    {{ data.header }}
                 </h1>
                 <p class="text-lg font-semibold text-gray-600 dark:text-gray-400 mb-2">{{
-
-                }}</p>
+                    data.content
+                    }}</p>
             </div>
-            <img :src="imagePath" alt="image" class="rounded-md shadow-md size-80">
-        </div>
-
-        <!-- Описание и услуги -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6  p-8 ">
-            <div class="bg-gray-200 dark:bg-gray-700 rounded-lg">
-                <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-400">Услуги</h2>
-                <ul class="list-disc list-inside mt-2 text-gray-600 dark:text-gray-300">
-                    <li>Индивидуальные консультации</li>
-                    <li>Семейная терапия</li>
-                    <li>Групповые занятия</li>
-                    <li>Поддержка в кризисных ситуациях</li>
-                </ul>
-            </div>
-            <div class="bg-gray-200 dark:bg-gray-700 rounded-lg p-4">
-                <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-400">Контактная информация</h2>
-                <p class="mt-2 text-gray-600 dark:text-gray-300">
-                    Телефон: <span class="font-semibold">{{ phoneNumber }}</span>
-                </p>
-                <p class="mt-2 text-gray-600 dark:text-gray-300">
-                    Email: <span class="font-semibold">{{ email }}</span>
-                </p>
+            <div class="basis-1/2">
+                <img :src="`/storage/${data.image}`" alt="image" class="rounded-md shadow-md">
             </div>
         </div>
-        <div class="dark:bg-gray-700 rounded-lg mx-4">
-            <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-400">Категории</h2>
-            <ul class="list-disc list-inside mt-2 text-gray-500 dark:text-gray-300">
-                <li><a class="hover:text-black" href="">Психологическая помощь</a></li>
-                <li><a class="hover:text-black" href="">Личностный рост</a></li>
-                <li><a class="hover:text-black" href="">Семейные отношения</a></li>
-                <li><a class="hover:text-black" href="">Стрессы и выгорание</a></li>
-                <li><a class="hover:text-black" href="">Детская и подростковая психология</a></li>
-            </ul>
-        </div>
-        <!-- Краткая информация о психологе -->
-        <div class="bg-gray-200 dark:bg-gray-700 rounded-lg mx-4 mt-4">
-            <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-400">О себе</h2>
-            <p class="mt-2 text-gray-600 dark:text-gray-300">{{  }}</p>
-        </div>
+        <div v-if="isQuestion">
+            <div class="flex mx-auto flex-col w-1/2 sm:rounded-lg">
+                <form @submit.prevent="submit">
+                    <div class="flex flex-col ">
+                        <TextInput id="name" type="text" class="mt-1 block w-full" v-model="form.name" required
+                            autofocus autocomplete="name" placeholder="Как к Вам обращаться?">
+                        </TextInput>
+                        <TextInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required
+                            autofocus autocomplete="email" placeholder="Почтовый адрес">
+                        </TextInput>
+                        <TextInput id="contact" type="text" class="mt-1 block w-full" v-model="form.contact" required
+                            autofocus autocomplete="contact" placeholder="Любой другой способ связи">
+                        </TextInput>
+                        <TextInput id="question" type="text" class="mt-1 block w-full" v-model="form.question" required
+                            autofocus autocomplete="question" placeholder="Ваш вопрос">
+                        </TextInput>
+                        <div class="grid grid-cols-2 gap-4">
+                            <button @click="closeQuestion"  class="shadow-md focus:shadow-inner shadow-black hover:shadow-pink-200
+                         hover:text-pink-400 rounded-lg bg-gradient-to-br from-gray-300
+                         duration-200 text-gray-600  to-gray-200 p-2 mt-2 ">
+                                Закрыть
+                            </button>
+                            <button @click="submit" class="shadow-md focus:shadow-inner shadow-black hover:shadow-cyan-200
+                         hover:text-cyan-400 rounded-lg bg-gradient-to-br from-gray-300
+                         duration-200 text-gray-600  to-gray-200 p-2 mt-2 ">
+                                Отправить
+                            </button>
+                        </div>
 
+                    </div>
+                </form>
+            </div>
+        </div>
         <!-- Кнопка записи на прием -->
-        <div class="text-right mt-4 mx-4">
-            <button
+        <div v-if="!isQuestion" class="text-center mt-4 mx-4">
+            <button @click="getQuestion"
                 class="shadow-md focus:shadow-inner shadow-black hover:shadow-pink-200 hover:text-pink-400 rounded-lg bg-gradient-to-br from-gray-300 duration-200 text-gray-600 to-gray-200 p-4">
                 Задать вопрос
             </button>
         </div>
+
+
     </GuestLayout>
 
 </template>
 
 <script setup>
+import TextInput from "@/Components/TextInput.vue";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
 import { ref } from "vue";
-
+import { useForm } from "@inertiajs/vue3";
+const form = useForm({
+    name: '',
+    email: '',
+    contact: '',
+    question: ''
+})
+const isQuestion = ref(false)
 const props = defineProps({
     mainData: Object,
 })
 console.log(props.mainData)
 
-const imagePath = ref(`/storage/${props.mainData.image}`)
-
+const getQuestion = () => {
+    isQuestion.value = true
+}
+const closeQuestion = () => {
+    isQuestion.value = false
+}
+const submit = () => {
+    form.post(route('user.question.store'), {
+        preserveScroll: true,
+        onSuccess: () => {
+            isQuestion.value = false
+        }
+    })
+}
 </script>
 <style></style>

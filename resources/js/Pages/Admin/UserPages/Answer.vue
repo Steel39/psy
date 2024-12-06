@@ -15,7 +15,7 @@
                             v-model="form.answer"
                             type="text" />
                         <SecondaryButton :disabled="form.processing" @click="submit">
-                            Добавить услугу
+                            Добавить ответ
                         </SecondaryButton>
                     </form>
                 </div>

@@ -7,6 +7,7 @@ use App\Models\Certificate;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\Pages\About;
+use App\Models\Pages\Answer;
 use App\Models\Pages\MainPage;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -81,7 +82,10 @@ class IndexController extends Controller
     }
     public function answer(): Response
     {
-        return Inertia::render('User/Answer');
+        $answers = Answer::all();
+        return Inertia::render('User/Answer', [
+            'answers' => $answers,
+        ]);
     }
     public function service(): Response
     {

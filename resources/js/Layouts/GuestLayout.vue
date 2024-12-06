@@ -5,15 +5,15 @@ import Header from "@/Pages/User/Header.vue";
 </script>
 
 <template class="w-full ">
-    <Header />
-    <div class="flex  flex-wrap mx-auto  w-full bg-gray-100 pt-6 sm:justify-center sm:pt-0 dark:bg-gray-900">
+    <Header class="shadow-lg" />
+    <div class="flex  flex-wrap mx-auto  w-full pt-6 sm:justify-center sm:pt-0 ">
         <div
-            class="w-full template_hide template_visible bg-stone-100 px-6 py-4 shadow-md  sm:rounded-lg dark:bg-gray-800">
+            class="w-full template_hide template_visible  px-6 py-4 sm:rounded-lg">
             <div class="py-4">
                 <div class="mx-auto sm:px-6 lg:px-4">
                     <div class="flex flex-col">
 
-                        <div class="bg-stone-600/20 dark:bg-gray-700 shadow-inner shadow-black rounded-lg py-4">
+                        <div class=" rounded-lg py-4">
                             <component_hide>
                                 <slot />
                             </component_hide>
