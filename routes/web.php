@@ -89,7 +89,7 @@ Route::prefix('dashboard')->group(function () {
             Route::get('/', [MainPageController::class, 'index'])->name('admin.page.main');
             Route::post('/store', [MainPageController::class, 'store'])->name('admin.page.main.store');
             Route::put('/update/{id}', [MainPageController::class, 'update'])->name('admin.page.main.update');
-            Route::delete('/delete/{id}', [MainPageController::class, 'destroy'])->name('admin.page.main.destroy');
+            Route::delete('/delete/{id}', [MainPageController::class, 'destroy'])->name('admin.page.main.delete');
         });
         Route::group(['prefix' => 'services'], function () {
             Route::get('/', [ServicePageController::class, 'index'])->name('admin.page.service');

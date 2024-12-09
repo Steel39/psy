@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Pages\About;
 use App\Models\Pages\Answer;
 use App\Models\Pages\MainPage;
+use App\Models\Pages\Service;
 use Inertia\Inertia;
 use Inertia\Response;
 class IndexController extends Controller
@@ -89,7 +90,10 @@ class IndexController extends Controller
     }
     public function service(): Response
     {
-        return Inertia::render('User/Service');
+        $services = Service::all();
+        return Inertia::render('User/Service', [
+            'services' => $services,
+        ]);
     }
 
     public function feedback(): Response
