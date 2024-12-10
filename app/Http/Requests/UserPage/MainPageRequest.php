@@ -23,7 +23,7 @@ class MainPageRequest extends FormRequest
     {
         return [
             'header'  => 'required|string|max:64',
-            'content'  => 'required|string|max:2048',
+            'content'  => 'required|string|max:4096',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }

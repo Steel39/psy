@@ -7,6 +7,7 @@ const props = defineProps({
 })
 const previewUrl = ref(null);
 const emit = defineEmits (['back'])
+console.log(props.about)
 const imagePath = ref(`/storage/${props.about.image}`)
 
 const onFileChange = (event) => {
@@ -40,13 +41,13 @@ const updateAbout = (id) => {
         onSuccess: () => {
             form.reset()
             previewUrl.value = null
+            close();
         },
         onError: (errors) => {
             form.errors.value = errors.errors;
             status.value = form.errors
         },
     })
-    close();
 }
 
 const fileSize = (bytes) => {

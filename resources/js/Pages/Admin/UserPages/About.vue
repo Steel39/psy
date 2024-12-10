@@ -38,7 +38,7 @@
                      shadow-gray-400/90 mt-2 text-left p-2 rounded-md">
                         <img class="w-72" :src="`/storage/${about.image}`">
                         <p class="font-semibold">{{ about.content }}</p>
-                        <button :disabled="isEdit" class=" w-1/4 p-2 mt-2  hover:bg-gray-400 rounded " @click="getEdit(about)">
+                        <button class=" w-1/4 p-2 mt-2  hover:bg-gray-400 rounded " @click="getEdit(about)">
                             Редакт.
                         </button>
                         <button @click="deleteAbout(about.id)" :disabled="isEdit" class=" w-1/4 p-2 mt-2  hover:bg-gray-400 rounded">
@@ -58,8 +58,10 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Link, useForm } from "@inertiajs/vue3";
 import { provide, ref } from "vue";
+
 const status = ref('Хорошего дня!')
 const previewUrl = ref(null);
+
 const imageUrl = (path) => {
     return `/storage/${path}`
 }
@@ -103,6 +105,7 @@ const submit = () => {
             form.reset()
             previewUrl.value = null
             status.value = 'Контент добавлен =)'
+
         },
         onError: (errors) => {
             form.errors.value = errors.errors;
