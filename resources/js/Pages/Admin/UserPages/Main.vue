@@ -2,55 +2,52 @@
     <AuthenticatedLayout>
         <div class="py-12">
             <HeaderForPages />
-            <div class="flex flex-col justify-center">
+            <div class="flex flex-col justify-items-center">
                 <div v-if="isEdit">
                     <EditMainPage :pageData="pageData" @back="closeEdit" />
                 </div>
-                <div v-for="data in mainData" class="flex  flex-col dark:text-white shadow-lg
-                     shadow-gray-400/90 mt-2 text-left p-2 rounded-md">
-                    <div v-if="data.header === null">
-                        <div class="flex flex-col">
-                            <form @submit.prevent="submit">
-                                <InputField class="w-1/2 text-center" name="header" v-model="form.header" type="text" />
-                                <textarea
-                                    class="w-3/4  mx-6 mt-4 rounded-xl h-40 bg-yellow-100 text-black shadow-inner focus:shadow-black duration-200"
-                                    type="text" name="content" id="content" v-model="form.content">
+                <div v-else>
+                    <div v-if="showFieldBlock" class="flex flex-col p-4">
+                        <form @submit.prevent="submit">
+                            <InputField class="w-1/2 text-center" name="header" v-model="form.header" type="text" />
+                            <textarea
+                                class="w-3/4  mx-6 mt-4 rounded-xl h-40 bg-yellow-100 text-black shadow-inner focus:shadow-black duration-200"
+                                type="text" name="content" id="content" v-model="form.content">
                             </textarea>
-
-                                <div class="mx-6 mt-4">
-                                    <input class="" @change="onFileChange" name="image" type="file"
-                                        :v-model="form.image" />
-                                    <progress v-if="form.progress" :value="form.progress.percentage" max="100">
-                                        {{ form.progress.percentage }}%
-                                    </progress>
-                                    <div v-if="previewUrl" class="mt-4">
-                                        <img class="rounded-md" :src="previewUrl"
-                                            :alt="'Предпросмотр: ' + form.image.name">
-                                        <p class="font-medium text-gray-400">Размер: {{ form.image.size | fileSize
-                                            }}</p>
-                                    </div>
-                                    <div v-if="form.errors.image">
-                                        <p style="color: red;">{{ form.errors.image }}</p>
-                                    </div>
+                            <div class="grid  mx-6 mt-4 justify-items-center">
+                                <input class="" @change="onFileChange" name="image" type="file" :v-model="form.image" />
+                                <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+                                    {{ form.progress.percentage }}%
+                                </progress>
+                                <div v-if="previewUrl" class="mt-4">
+                                    <img class="rounded-md" :src="previewUrl" :alt="'Предпросмотр: ' + form.image.name">
+                                    <p class="font-medium text-gray-400">Размер: {{ form.image.size | fileSize
+                                        }}</p>
                                 </div>
+                                <div v-if="form.errors.image">
+                                    <p style="color: red;">{{ form.errors.image }}</p>
+                                </div>
+                            </div>
+                            <SecondaryButton class="mt-4" :disabled="form.processing" @click="submit">
+                                Добавить контент
+                            </SecondaryButton>
+                        </form>
+                    </div>
+                    <div v-for="data in mainData" class="flex flex-col mx-10 dark:text-white shadow-lg
+                    shadow-gray-400/90 mt-2 text-left p-2 rounded-md">
+                        <img class="w-1/2" :src="`/storage/${data.image}`">
+                        <p class="font-semibold p-4">{{ data.content }}</p>
+                        <div class="grid grid-cols-2 justify-items-center decoration-pink-800">
+                            <button @click="deleteMainData(data.id)" class=" w-1/4 p-2 mt-2  hover:bg-red-400 rounded">
+                                Удалить
+                            </button>
+                            <button class=" w-1/4 p-2 mt-2  hover:bg-lime-400 rounded " @click="getEdit(data)">
+                                Редакт.
+                            </button>
 
-                                <SecondaryButton class="mt-4" :disabled="form.processing" @click="submit">
-                                    Добавить контент
-                                </SecondaryButton>
-                            </form>
                         </div>
-                    </div>
-                    <div v-else>
-                        <img class="" :src="`/storage/${data.image}`">
-                        <p class="font-semibold">{{ data.content }}</p>
-                        <button class=" w-1/4 p-2 mt-2  hover:bg-gray-400 rounded " @click="getEdit(data)">
-                            Редакт.
-                        </button>
-                        <button @click="deleteMainData(data.id)" class=" w-1/4 p-2 mt-2  hover:bg-gray-400 rounded">
-                            Удалить
-                        </button>
-                    </div>
 
+                    </div>
                 </div>
             </div>
         </div>
@@ -59,7 +56,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { useForm } from "@inertiajs/vue3";
-import { provide, ref } from "vue";
+import { computed, provide, ref } from "vue";
 import HeaderForPages from "@/Components/HeaderForPages.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import InputField from "@/Components/InputField.vue";
@@ -80,7 +77,10 @@ const closeEdit = () => {
     isEdit.value = false
 }
 const props = defineProps({
-    mainData: Object
+    mainData: {
+        type: Object,
+        default: null
+    }
 })
 console.log(props.mainData)
 
@@ -111,9 +111,17 @@ const submit = () => {
     })
 }
 
+const showFieldBlock = computed(() => {
+    props.mainData.forEach(items => {
+        console.log(items)
+    });
+    return props.mainData !== Object
+})
+
 const getEdit = (data) => {
     isEdit.value = true,
-        pageData.value = data
+    pageData.value = data,
+    window.scrollTo(0, top)
 }
 
 const deleteMainData = (id) => {

@@ -1,17 +1,21 @@
-<template >
+<template>
     <GuestLayout>
-        <div v-for="data in mainData" class="flex flex-col gap-4 p-4 sm:flex-row">
+        <div v-for="data in mainData" class="flex flex-col gap-4 p-4 md:flex-col">
             <div>
                 <h1 class="text-4xl font-bold text-gray-800 dark:text-gray-300 drop-shadow-xl rounded-[10px] p-2 mb-4">
                     {{ data.header }}
                 </h1>
-                <p class="text-lg font-semibold text-gray-600 dark:text-gray-400 mb-2">{{
-                    data.content
-                    }}</p>
             </div>
-            <div class="basis-1/2">
-                <img :src="`/storage/${data.image}`" alt="image" class="rounded-md shadow-md">
+            <div class="grid grid-cols-1 md:grid-cols-3 p-2">
+                <div>
+                    <img :src="`/storage/${data.image}`" alt="image" class="rounded-md shadow-md">
+                </div>
+                <div class="col-span-2 mx-5">
+                    <p class="text-lg font-semibold text-gray-600 dark:text-gray-400 mb-2">{{ data.content }}</p>
+                </div>
+
             </div>
+
         </div>
         <div v-if="isQuestion">
             <div class="flex mx-auto flex-col w-1/2 sm:rounded-lg">
@@ -30,7 +34,7 @@
                             autofocus autocomplete="question" placeholder="Ваш вопрос">
                         </TextInput>
                         <div class="grid grid-cols-2 gap-4">
-                            <button @click="closeQuestion"  class="shadow-md focus:shadow-inner shadow-black hover:shadow-pink-200
+                            <button @click="closeQuestion" class="shadow-md focus:shadow-inner shadow-black hover:shadow-pink-200
                          hover:text-pink-400 rounded-lg bg-gradient-to-br from-gray-300
                          duration-200 text-gray-600  to-gray-200 p-2 mt-2 ">
                                 Закрыть

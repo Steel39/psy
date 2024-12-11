@@ -9,8 +9,7 @@
                                 class="mt-1 block w-full rounded-md bg-gray-200 border-transparent
                                  focus:border-gray-500 focus:text-gray-600 focus:bg-white focus:ring-0
                                  dark:bg-gray-600 dark:text-gray-200 font-semibold focus:shadow-inner focus:shadow-gray-600 ">
-                            <button type="submit" @click="click" :disabled="form.processing"
-                                class="mt-1 ml-2 block w-1/4 rounded-md bg-gray-200 border-transparent
+                            <button type="submit" @click="click" :disabled="form.processing" class="mt-1 ml-2 block w-1/4 rounded-md bg-gray-200 border-transparent
                                  focus:bg-transparent focus:text-white focus:ring-0
                                  hover:shadow-lg hover:shadow-green-400 hover:text-green-500
                                  dark:bg-gray-600 dark:text-gray-200 font-semibold duration-200  ease-in-out ">
@@ -37,8 +36,8 @@
                                             }}</span>
                                     </td>
                                     <td>
-                                        <button class="rounded-md w-1/2 h-8 hover:shadow-lg
-                                         font-bold hover:duration-200 duration-200 ease-in-out hover:shadow-red-500
+                                        <button class="rounded-md w-1/2 h-8
+                                        font-bold hover:duration-200 duration-200 ease-in-out hover:shadow-red-500
                                           hover:text-red-500 hover:shadow-inner  text-black"
                                             @click="deleteCategory(category.id)">DEL</button>
                                     </td>

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('main_page', function (Blueprint $table) {
             $table->id();
             $table->string('header');
-            $table->string('content, 4000');
+            $table->text('content');
             $table->string('image');
             $table->timestamps();
         });

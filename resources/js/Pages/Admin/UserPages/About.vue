@@ -2,7 +2,7 @@
     <AuthenticatedLayout>
         <div class="py-12">
             <HeaderForPages />
-            <div class="grid grid-cols-2">
+            <div class="grid md:grid-cols-2" >
                 <div v-if="!isEdit">
                     <form @submit.prevent="submit">
                         <textarea
